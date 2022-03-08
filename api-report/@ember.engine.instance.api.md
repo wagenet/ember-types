@@ -4,18 +4,35 @@
 
 ```ts
 
+import { BootOptions } from '@ember/application/instance';
 import EmberObject from '@ember/object';
+import { set } from '@ember/object';
 
-// @public
-class EngineInstance extends EmberObject.extend(
-RegistryProxyMixin,
-ContainerProxyMixin
-) {
-    boot(): Promise<EngineInstance>;
+// @public (undocumented)
+interface EngineInstance extends RegistryProxyMixin, ContainerProxyMixin, Owner {}
 
-    unregister(fullName: string): unknown;
+// @public (undocumented)
+class EngineInstance extends EmberObject {
+    // (undocumented)
+    boot(options?: BootOptions): Promise<this>;
+    // (undocumented)
+    buildChildEngineInstance(name: string, options?: EngineInstanceOptions): EngineInstance;
+    // (undocumented)
+    mountPoint: string;
+    // (undocumented)
+    routable: boolean;
+    // (undocumented)
+    static setupRegistry(registry: Registry, options: unknown): void;
 }
 export default EngineInstance;
+
+// @public (undocumented)
+export interface EngineInstanceOptions {
+    // (undocumented)
+    mountPoint?: string;
+    // (undocumented)
+    routable?: boolean;
+}
 
 // (No @packageDocumentation comment for this package)
 

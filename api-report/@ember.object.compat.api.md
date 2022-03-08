@@ -4,8 +4,14 @@
 
 ```ts
 
+import { Revision } from '@glimmer/validator';
+import { UpdatableTag } from '@glimmer/validator';
+
 // @public
-export const dependentKeyCompat: PropertyDecorator;
+export function dependentKeyCompat(target: ElementDescriptor[0], key: ElementDescriptor[1], desc: ElementDescriptor[2]): PropertyDescriptor;
+
+// @public (undocumented)
+export function dependentKeyCompat(desc: PropertyDescriptor): ExtendedMethodDecorator;
 
 // (No @packageDocumentation comment for this package)
 

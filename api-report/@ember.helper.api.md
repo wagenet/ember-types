@@ -4,37 +4,30 @@
 
 ```ts
 
-import { Opaque } from 'ember/-private/type-utils';
+import { array } from '@glimmer/runtime';
+import { helperCapabilities as capabilities } from '@glimmer/manager';
+import { concat } from '@glimmer/runtime';
+import { fn } from '@glimmer/runtime';
+import { get } from '@glimmer/runtime';
+import { hash } from '@glimmer/runtime';
+import { invokeHelper } from '@glimmer/runtime';
+import { setHelperManager } from '@glimmer/manager';
 
-// @public
-export const array: ArrayHelper;
+export { array }
 
-// @public (undocumented)
-export interface ArrayHelper extends Opaque<'helper:array'> {}
+export { capabilities }
 
-// @public
-export const concat: ConcatHelper;
+export { concat }
 
-// @public (undocumented)
-export interface ConcatHelper extends Opaque<'helper:concat'> {}
+export { fn }
 
-// @public
-export const fn: FnHelper;
+export { get }
 
-// @public (undocumented)
-export interface FnHelper extends Opaque<'helper:fn'> {}
+export { hash }
 
-// @public
-export const get: GetHelper;
+export { invokeHelper }
 
-// @public (undocumented)
-export interface GetHelper extends Opaque<'helper:get'> {}
-
-// @public
-export const hash: HashHelper;
-
-// @public (undocumented)
-export interface HashHelper extends Opaque<'helper:hash'> {}
+export { setHelperManager }
 
 // (No @packageDocumentation comment for this package)
 

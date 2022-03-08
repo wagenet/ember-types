@@ -4,173 +4,50 @@
 
 ```ts
 
-import RouteInfo from '@ember/routing/-private/route-info';
-import RouteInfoWithAttributes from '@ember/routing/-private/route-info-with-attributes';
+import Controller from '@ember/controller';
+import EngineInstance from '@ember/engine/instance';
+import { InternalRouteInfo } from 'router_js';
+import { MatchCallback } from 'route-recognizer';
+import { ModelFor } from 'router_js';
+import { Reference } from '@glimmer/reference';
+import { Route as Route_2 } from 'router_js';
+import { RouteInfo } from 'router_js';
+import { RouteInfoWithAttributes } from 'router_js';
+import Router from 'router_js';
 import Service from '@ember/service';
-import Transition from '@ember/routing/-private/transition';
+import { SimpleElement } from '@simple-dom/interface';
+import { Template } from '@glimmer/interfaces';
+import { TemplateFactory } from '@glimmer/interfaces';
+import { Timer } from 'backburner';
+import { Transition } from 'router_js';
+import { TransitionState } from 'router_js';
 
-// @public (undocumented)
-export type RouteModel = object | string | number;
+export { RouteInfo }
+
+export { RouteInfoWithAttributes }
 
 // @public
-class RouterService extends Service {
-    //
-    readonly currentRoute: RouteInfo;
-    readonly currentRouteName: string;
-    readonly currentURL: string;
-    has(name: string): boolean;
-    isActive(routeName: string, options?: { queryParams: object }): boolean;
+interface RouterService<R extends Route> extends Evented {
+}
+
+// @public (undocumented)
+class RouterService<R extends Route> extends RouterService_base {
+    readonly currentRoute: this['_router']['currentRoute'];
+    readonly currentRouteName: this['_router']['currentRouteName'];
+    readonly currentURL: this['_router']['currentURL'];
+    isActive(...args: RouteArgs<R>): boolean;
+    readonly location: this['_router']['location'];
+    recognize(url: string): RouteInfo | null;
+    recognizeAndLoad(url: string): Promise<RouteInfoWithAttributes>;
+    refresh: ((this: RouterService<Route>, pivotRouteName?: string | undefined) => Transition) | undefined;
+    replaceWith(...args: RouteArgs<R>): Transition;
+    readonly rootURL: this['_router']['rootURL'];
     // (undocumented)
-    isActive(
-    routeName: string,
-    models: RouteModel,
-    options?: { queryParams: object }
-    ): boolean;
+    get _router(): EmberRouter<R>;
+    transitionTo(...args: RouteArgs<R>): Transition;
+    urlFor(routeName: string, ...args: ModelFor<R>[] | [...ModelFor<R>[], RouteOptions]): string;
     // (undocumented)
-    isActive(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    options?: { queryParams: object }
-    ): boolean;
-    // (undocumented)
-    isActive(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    options?: { queryParams: object }
-    ): boolean;
-    // (undocumented)
-    isActive(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    modelsD: RouteModel,
-    options?: { queryParams: object }
-    ): boolean;
-    off(
-    name: 'routeDidChange' | 'routeWillChange',
-    callback: (transition: Transition) => void
-    ): RouterService;
-    on(
-    name: 'routeDidChange' | 'routeWillChange',
-    callback: (transition: Transition) => void
-    ): RouterService;
-    one(
-    name: 'routeDidChange' | 'routeWillChange',
-    callback: (transition: Transition) => void
-    ): RouterService;
-    recognize(url: string): RouteInfo;
-    recognizeAndLoad(url: string): RouteInfoWithAttributes;
-    refresh(pivotRouteName?: string): Transition;
-    replaceWith(
-    routeNameOrUrl: string,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    replaceWith(
-    routeNameOrUrl: string,
-    models: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    replaceWith(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    replaceWith(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    replaceWith(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    modelsD: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    readonly rootURL: string;
-    transitionTo(
-    routeNameOrUrl: string,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    transitionTo(
-    routeNameOrUrl: string,
-    models: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    transitionTo(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    transitionTo(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    transitionTo(
-    routeNameOrUrl: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    modelsD: RouteModel,
-    options?: { queryParams: object }
-    ): Transition;
-    // (undocumented)
-    transitionTo(options: { queryParams: object }): Transition;
-    trigger(
-    name: string,
-    args: any
-    ): void;
-    urlFor(routeName: string, options?: { queryParams: object }): string;
-    // (undocumented)
-    urlFor(
-    routeName: string,
-    models: RouteModel,
-    options?: { queryParams: object }
-    ): string;
-    // (undocumented)
-    urlFor(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    options?: { queryParams: object }
-    ): string;
-    // (undocumented)
-    urlFor(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    options?: { queryParams: object }
-    ): string;
-    // (undocumented)
-    urlFor(
-    routeName: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    modelsD: RouteModel,
-    options?: { queryParams: object }
-    ): string;
+    willDestroy(): void;
 }
 export default RouterService;
 

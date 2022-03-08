@@ -4,20 +4,20 @@
 
 ```ts
 
-// @public @deprecated
-export function assign<T extends object, U extends object>(target: T, source: U): Mix<T, U>;
+// @public
+export function assign<T, U>(target: T, source: U): T & U;
 
 // @public (undocumented)
-export function assign<T extends object, U extends object, V extends object>(target: T, source1: U, source2: V): Mix3<T, U, V>;
+export function assign<T, U, V>(target: T, source1: U, source2: V): T & U & V;
 
 // @public (undocumented)
-export function assign<T extends object, U extends object, V extends object, W extends object>(target: T, source1: U, source2: V, source3: W): Mix4<T, U, V, W>;
+export function assign<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
 
 // @public (undocumented)
-export function assign(target: object, ...sources: object[]): unknown;
+export function assign(target: object, ...sources: object[]): object;
 
 // @public (undocumented)
-export function assign(target: object, final: undefined | null): never;
+export const hasPropertyAccessors = true;
 
 // (No @packageDocumentation comment for this package)
 

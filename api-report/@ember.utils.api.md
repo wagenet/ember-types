@@ -4,34 +4,26 @@
 
 ```ts
 
-import { AnyFn } from 'ember/-private/type-utils';
+// @public
+export function compare(v: unknown, w: unknown): Comparison;
 
 // @public
-export function compare(v: unknown, w: unknown): number;
+export function isBlank(obj: unknown): boolean;
 
 // @public
-export function isBlank(obj?: unknown): boolean;
-
-// @public
-export function isEmpty(obj?: unknown): boolean;
+export function isEmpty(obj: unknown): boolean;
 
 // @public
 export function isEqual(a: unknown, b: unknown): boolean;
 
 // @public
-export function isNone(obj?: unknown): obj is null | undefined;
+export function isNone(obj: any): obj is null | undefined;
 
 // @public
-export function isPresent(obj?: unknown): boolean;
+export function isPresent<T>(obj: T | null | undefined): obj is T;
 
 // @public
-export function typeOf<T>(value: T): TypeOf<T>;
-
-// @public (undocumented)
-export function typeOf(): 'undefined';
-
-// @public (undocumented)
-export function typeOf(item: unknown): string;
+export function typeOf(item: unknown): TypeName;
 
 // (No @packageDocumentation comment for this package)
 

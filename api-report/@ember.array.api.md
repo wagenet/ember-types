@@ -4,31 +4,124 @@
 
 ```ts
 
-import ComputedProperty from '@ember/object/computed';
-import Enumerable from '@ember/array/-private/enumerable';
-import Mixin from '@ember/object/mixin';
-import NativeArray from '@ember/array/-private/native-array';
-
 // @public
-export function A<T>(arr?: T[]): NativeArray<T>;
+export function A<A>(arr: A): A extends Array<infer V> ? NativeArray<V> : NativeArray<unknown>;
 
-// @public
-interface Array_2<T> extends Enumerable<T> {
-    '@each': ComputedProperty<T>;
-    indexOf(searchElement: T, fromIndex?: number): number;
-    lastIndexOf(searchElement: T, fromIndex?: number): number;
-    length: number | ComputedProperty<number>;
+// @public (undocumented)
+export function A<T>(): NativeArray<T>;
+
+// @public (undocumented)
+interface EmberArray<T> extends Enumerable {
+    // (undocumented)
+    any<Target = void>(
+    callback: (this: Target, item: T, index: number, arr: this) => boolean,
+    target?: Target
+    ): boolean;
+    // (undocumented)
+    compact(): NativeArray<Exclude<T, null>>;
+    // (undocumented)
+    every<Target = void>(
+    callback: (this: Target, item: T, index: number, arr: this) => boolean,
+    target?: Target
+    ): boolean;
+    // (undocumented)
+    filter<Target>(
+    callback: (this: Target, item: T, index: number, arr: this) => boolean,
+    target?: Target
+    ): NativeArray<T>;
+    // (undocumented)
+    filterBy(key: string): NativeArray<T>;
+    // (undocumented)
+    find<Target = void>(
+    callback: (this: Target, item: T, index: number, arr: this) => boolean,
+    target?: Target
+    ): T | undefined;
+    // (undocumented)
+    findBy<K extends string>(key: K, value?: Value<T, K>): T | undefined;
+    // (undocumented)
+    firstObject: T | undefined;
+    // (undocumented)
+    forEach<Target>(
+    callback: (this: Target, item: T, index: number, arr: this) => void,
+    target?: Target
+    ): this;
+    // (undocumented)
+    getEach<K extends string>(key: K): NativeArray<Value<T, K>>;
+    // (undocumented)
+    includes(object: T, startAt?: number): boolean;
+    // (undocumented)
+    indexOf(object: T, startAt?: number): number;
+    // (undocumented)
+    invoke<K extends string>(
+    methodName: K,
+    ...args: Value<T, K> extends (...args: any[]) => any ? Parameters<Value<T, K>> : unknown[]
+    ): NativeArray<Value<T, K> extends (...args: any[]) => any ? ReturnType<Value<T, K>> : unknown>;
+    // (undocumented)
+    isAny<K extends string>(key: K, value?: Value<T, K>): boolean;
+    // (undocumented)
+    isEvery<K extends string>(key: K, value?: Value<T, K>): boolean;
+    // (undocumented)
+    lastIndexOf(object: T, startAt?: number): number;
+    // (undocumented)
+    lastObject: T | undefined;
+    // (undocumented)
+    length: number;
+    // (undocumented)
+    map<U, Target>(
+    callback: (this: Target, item: T, index: number, arr: this) => U,
+    target?: Target
+    ): NativeArray<U>;
+    // (undocumented)
+    mapBy<K extends string>(key: K): NativeArray<Value<T, K>>;
+    // (undocumented)
     objectAt(idx: number): T | undefined;
-    objectsAt(indexes: number[]): Array_2<T | undefined>;
-    slice(beginIndex?: number, endIndex?: number): T[];
+    // (undocumented)
+    objectsAt(indexes: number[]): Array<T | undefined>;
+    // (undocumented)
+    reduce<V>(
+    callback: (summation: V, current: T, index: number, arr: this) => V,
+    initialValue?: V
+    ): V;
+    // (undocumented)
+    reject<Target>(
+    callback: (this: Target, item: T, index: number, arr: this) => boolean,
+    target?: Target
+    ): NativeArray<T>;
+    // (undocumented)
+    rejectBy(key: string): NativeArray<T>;
+    // (undocumented)
+    setEach<K extends string>(key: K, value: Value<T, K>): this;
+    // (undocumented)
+    slice(beginIndex?: number, endIndex?: number): NativeArray<T>;
+    // (undocumented)
+    sortBy(key: string): T[];
+    // (undocumented)
+    toArray(): T[];
+    // (undocumented)
+    uniq(): NativeArray<T>;
+    // (undocumented)
+    uniqBy(key: string): NativeArray<T>;
+    // (undocumented)
+    without(value: T): NativeArray<T>;
 }
 
 // @public (undocumented)
-const Array_2: Mixin<Array_2<unknown>>;
-export default Array_2;
+const EmberArray: Mixin;
+export default EmberArray;
 
 // @public
-export function isArray(obj: unknown): obj is ArrayLike<unknown>;
+export function isArray(obj: unknown): boolean;
+
+// @internal
+export function makeArray<T, TT>(obj: T): T extends TT[] ? T : T extends null | undefined ? [] : [T];
+
+// @public (undocumented)
+export interface NativeArray<T>
+extends Omit<Array<T>, 'every' | 'filter' | 'find' | 'forEach' | 'map' | 'reduce' | 'slice'>,
+MutableArray<T> {}
+
+// @public
+export const NativeArray: Array<unknown>;
 
 // (No @packageDocumentation comment for this package)
 

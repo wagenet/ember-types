@@ -4,10 +4,32 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-
 // @public
-class AutoLocation extends EmberObject {}
+class AutoLocation extends EmberObject implements EmberLocation {
+    cancelRouterSetup: boolean;
+    // (undocumented)
+    concreteImplementation?: EmberLocation;
+    detect(): void;
+    // @internal (undocumented)
+    documentMode: number | undefined;
+    // (undocumented)
+    formatURL: (url: string) => string;
+    // (undocumented)
+    getURL: () => string;
+    global: any;
+    history: any;
+    // (undocumented)
+    implementation: string;
+    location: Location;
+    // (undocumented)
+    onUpdateURL: (callback: UpdateCallback) => void;
+    rootURL: string;
+    // (undocumented)
+    setURL: (url: string) => void;
+    userAgent: string;
+    // (undocumented)
+    willDestroy(): void;
+}
 export default AutoLocation;
 
 // (No @packageDocumentation comment for this package)

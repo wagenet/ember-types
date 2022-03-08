@@ -4,37 +4,11 @@
 
 ```ts
 
-import { ObserverMethod } from '@ember/object/-private/types';
+// @public
+export function addObserver(obj: any, path: string, target: object | Function | null, method?: string | Function, sync?: boolean): void;
 
 // @public
-export function addObserver<Context, Target>(
-obj: Context,
-key: keyof Context,
-target: Target,
-method: ObserverMethod<Target, Context>
-): void;
-
-// @public (undocumented)
-export function addObserver<Context>(
-obj: Context,
-key: keyof Context,
-method: ObserverMethod<Context, Context>
-): void;
-
-// @public
-export function removeObserver<Context, Target>(
-obj: Context,
-key: keyof Context,
-target: Target,
-method: ObserverMethod<Target, Context>
-): any;
-
-// @public (undocumented)
-export function removeObserver<Context>(
-obj: Context,
-key: keyof Context,
-method: ObserverMethod<Context, Context>
-): any;
+export function removeObserver(obj: any, path: string, target: object | Function | null, method?: string | Function, sync?: boolean): void;
 
 // (No @packageDocumentation comment for this package)
 

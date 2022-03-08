@@ -4,46 +4,17 @@
 
 ```ts
 
-import { AnyFunction } from '@ember/object/-private/types';
+import { Revision } from '@glimmer/validator';
+import { UpdatableTag } from '@glimmer/validator';
 
 // @public
-export function addListener<Context>(
-obj: Context,
-eventName: string,
-target: unknown,
-method: keyof Context | AnyFunction,
-once?: boolean
-): void;
-
-// @public (undocumented)
-export function addListener<Context>(
-obj: Context,
-eventName: string,
-method: keyof Context | AnyFunction,
-once?: boolean
-): void;
+export function addListener(obj: object, eventName: string, target: object | Function | null, method?: Function | string, once?: boolean, sync?: boolean): void;
 
 // @public
-export function removeListener<Context>(
-obj: Context,
-eventName: string,
-target: unknown,
-method: keyof Context | AnyFunction
-): void;
-
-// @public (undocumented)
-export function removeListener<Context>(
-obj: Context,
-eventName: string,
-method: keyof Context | AnyFunction
-): void;
+export function removeListener(obj: object, eventName: string, targetOrFunction: object | Function | null, functionOrName?: string | Function): void;
 
 // @public
-export function sendEvent(
-obj: unknown,
-eventName: string,
-params?: unknown[],
-): boolean;
+export function sendEvent(obj: object, eventName: string, params?: any[], actions?: any[], _meta?: Meta | null): boolean;
 
 // (No @packageDocumentation comment for this package)
 

@@ -4,22 +4,30 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-import EngineInstance from '@ember/engine/instance';
-import Initializer from '@ember/engine/-private/types/initializer';
-import Resolver from 'ember-resolver';
+import { BootOptions } from '@ember/application/instance';
+import EmberObject$1 from '@ember/object';
+import { set } from '@ember/object';
 
-// @public
-class Engine extends EmberObject.extend(RegistryProxyMixin) {
-    buildInstance(options?: object): EngineInstance;
-    static initializer(initializer: Initializer<Engine>): void;
-    static instanceInitializer(instanceInitializer: Initializer<EngineInstance>): void;
-    resolver: Resolver | null;
+// @public (undocumented)
+interface Engine extends RegistryProxyMixin {}
+
+// @public (undocumented)
+class Engine extends Namespace {
+    // (undocumented)
+    buildInstance(options?: EngineInstanceOptions): EngineInstance;
+    // (undocumented)
+    static buildRegistry(engine: Engine): Registry;
+    // (undocumented)
+    initializer: (initializer: unknown) => void;
+    // (undocumented)
+    instanceInitializer: (initializer: unknown) => void;
+    // (undocumented)
+    Resolver: unknown | null;
 }
 export default Engine;
 
 // @public
-export function getEngineParent(engine: EngineInstance): EngineInstance;
+export function getEngineParent(engine: EngineInstance): EngineInstance | undefined;
 
 // (No @packageDocumentation comment for this package)
 

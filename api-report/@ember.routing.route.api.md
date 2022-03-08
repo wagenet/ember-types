@@ -5,104 +5,122 @@
 ```ts
 
 import Controller from '@ember/controller';
-import EmberObject from '@ember/object';
-import { RouteQueryParam } from '@ember/routing/types';
-import Transition from '@ember/routing/-private/transition';
+import EngineInstance from '@ember/engine/instance';
+import { InternalRouteInfo } from 'router_js';
+import { MatchCallback } from 'route-recognizer';
+import { ModelFor } from 'router_js';
+import { Reference } from '@glimmer/reference';
+import { Route as Route_2 } from 'router_js';
+import { RouteInfo } from 'router_js';
+import { RouteInfoWithAttributes } from 'router_js';
+import Router from 'router_js';
+import Service from '@ember/service';
+import { SimpleElement } from '@simple-dom/interface';
+import { Template } from '@glimmer/interfaces';
+import { TemplateFactory } from '@glimmer/interfaces';
+import { Timer } from 'backburner';
+import { Transition } from 'router_js';
+import { TransitionState } from 'router_js';
 
 // @public
-class Route<Model = unknown, Params extends object = object>
-extends EmberObject.extend(ActionHandler, Evented) {
-    // methods
-    activate(): void;
-
-    afterModel(resolvedModel: Model, transition: Transition): Promise<unknown> | void;
-
-    beforeModel(transition: Transition): Promise<unknown> | void;
-
-    buildRouteInfoMetadata(): unknown;
-
-    controller: Controller;
-
-    controllerFor(name: string): Controller;
-
-    controllerName: string;
-
-    deactivate(): void;
-
-    didTransition(): void;
-
-    error(error: unknown, transition: Transition): void;
-
-    fullRouteName: string;
-
-    intermediateTransitionTo(name: string, ...models: unknown[]): Transition;
-
-    loading(transition: Transition, route: Route): void;
-
-    model(params: Params, transition: Transition): Model | PromiseLike<Model>;
-
-    modelFor(name: string): unknown;
-
-    paramsFor(name: string): object;
-
-    queryParams: { [key: string]: RouteQueryParam };
-
-    redirect(model: Model, transition: Transition): void;
-
-    refresh(): Transition;
-
-    // @deprecated
-    replaceWith(name: string, ...args: unknown[]): Transition;
-
-    resetController(controller: Controller, isExiting: boolean, transition: Transition): void;
-
-    routeName: string;
-
-    send(name: string, ...args: unknown[]): void;
-
-    serialize(model: Model, params: string[]): string | object;
-
-    setupController(controller: Controller, model: Model, transition: Transition): void;
-
-    templateName: string;
-
-    // @deprecated
-    transitionTo(name: string, options?: { queryParams: object }): Transition;
-
-    // (undocumented)
-    transitionTo(name: string, modelsA: RouteModel, options?: { queryParams: object }): Transition;
-
-    // (undocumented)
-    transitionTo(name: string, modelsA: RouteModel, modelsB: RouteModel, options?: { queryParams: object }): Transition;
-
-    // (undocumented)
-    transitionTo(
-    name: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    options?: { queryParams: object },
-    ): Transition;
-
-    // (undocumented)
-    transitionTo(
-    name: string,
-    modelsA: RouteModel,
-    modelsB: RouteModel,
-    modelsC: RouteModel,
-    modelsD: RouteModel,
-    options?: { queryParams: object },
-    ): Transition;
-
-    // (undocumented)
-    transitionTo(options: { queryParams: object }): Transition;
-
-    willTransition(transition: Transition): void;
+interface Route<T = unknown> extends Route_2<T> {
+    didTransition?(): boolean | void;
+    error?(error: Error, transition: Transition): boolean | void;
+    loading?(transition: Transition, route: Route): boolean | void;
+    willTransition?(transition: Transition): boolean | void;
 }
-export default Route;
 
 // @public (undocumented)
-export type RouteModel = object | string | number;
+class Route<T = unknown> extends Route_base implements Route_2, Evented {
+    constructor(owner: Owner);
+    // (undocumented)
+    actions: Record<string, (...args: any[]) => any>;
+    activate(_transition: Transition): void;
+    _activeQPChanged(qp: QueryParam, value: unknown): void;
+    afterModel(_resolvedModel: T | undefined, _transition: Transition): unknown | Promise<unknown>;
+    beforeModel(_transition: Transition): unknown | Promise<unknown>;
+    // (undocumented)
+    _bucketCache: BucketCache;
+    buildRouteInfoMetadata(): unknown;
+    // (undocumented)
+    context: T;
+    contextDidChange(): void;
+    controller: Controller;
+    controllerFor(name: string, _skipAssert: true): Controller | undefined;
+    // (undocumented)
+    controllerFor(name: string, _skipAssert?: false): Controller;
+    controllerName: string | null;
+    // (undocumented)
+    currentModel: T;
+    deactivate(_transition?: Transition): void;
+    deserialize(_params: {}, transition: Transition): T | PromiseLike<T> | undefined;
+    deserializeQueryParam(value: unknown, _urlKey: string, defaultValueType: string): unknown;
+    enter(transition: Transition): void;
+    // (undocumented)
+    _environment: any;
+    exit(transition?: Transition): void;
+    findModel(...args: any[]): any;
+    fullRouteName: string;
+    generateController(name: string): Controller<unknown>;
+    // (undocumented)
+    has: (name: string) => boolean;
+    intermediateTransitionTo(...args: NamedRouteArgs<this>): void;
+    // (undocumented)
+    _internalName: string;
+    _internalReset(isExiting: boolean, transition: Transition): void;
+    // (undocumented)
+    static isRouteFactory: boolean;
+    model(params: Record<string, unknown>, transition: Transition): T | PromiseLike<T> | undefined;
+    modelFor(_name: string): unknown | undefined;
+    // (undocumented)
+    off: (name: string, method: string | ((...args: any[]) => void)) => this;
+    // (undocumented)
+    on: (name: string, method: ((...args: any[]) => void) | string) => this;
+    // (undocumented)
+    one: (name: string, method: string | ((...args: any[]) => void)) => this;
+    _optionsForQueryParam(qp: QueryParam): {};
+    paramsFor(name: string): Record<string, unknown>;
+    protected get _qp(): QueryParamMeta;
+    // (undocumented)
+    _qpChanged(prop: string, value: unknown, qp: QueryParam): void;
+    queryParams: Record<string, {
+        refreshModel?: boolean;
+        replace?: boolean;
+        as?: string;
+    }>;
+    redirect(_model: T, _transition: Transition): void;
+    refresh(): Transition;
+    // @deprecated
+    replaceWith(...args: any[]): Transition;
+    resetController(_controller: Controller, _isExiting: boolean, _transition: Transition): this;
+    routeName: string;
+    // (undocumented)
+    _router: EmberRouter;
+    send: <K extends keyof this | keyof this['actions']>(name: K, ...args: MaybeParameters<K extends keyof this ? this[K] : K extends keyof this['actions'] ? this['actions'][K] : never>) => MaybeReturnType<K extends keyof this ? this[K] : K extends keyof this['actions'] ? this['actions'][K] : never>;
+    serialize(model: T | undefined, params: string[]): {
+        [key: string]: unknown;
+    } | undefined;
+    serializeQueryParam(value: unknown, _urlKey: string, defaultValueType: string): string | null | undefined;
+    serializeQueryParamKey(controllerPropertyName: string): string;
+    _setRouteName(name: string): void;
+    setup(context: T | undefined, transition: Transition): void;
+    setupController(controller: Controller, context: T | undefined, _transition?: Transition): void;
+    _stashNames(routeInfo: InternalRouteInfo<this>, dynamicParent: InternalRouteInfo<this>): void;
+    protected get store(): any;
+    protected set store(value: any);
+    teardownViews(): void;
+    templateName: string | null;
+    // (undocumented)
+    _topLevelViewTemplate: any;
+    // @deprecated
+    transitionTo(...args: RouteArgs<this>): Transition;
+    // (undocumented)
+    trigger: (name: string, ...args: any[]) => any;
+    _updatingQPChanged(qp: QueryParam): void;
+    // (undocumented)
+    willDestroy(): void;
+}
+export default Route;
 
 // (No @packageDocumentation comment for this package)
 

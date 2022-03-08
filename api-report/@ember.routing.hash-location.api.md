@@ -4,10 +4,28 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-
 // @public
-class HashLocation extends EmberObject {}
+class HashLocation extends EmberObject implements EmberLocation {
+    formatURL(url: string): string;
+    getHash(): string;
+    getURL(): string;
+    // (undocumented)
+    _hashchangeHandler?: EventListener;
+    // (undocumented)
+    implementation: string;
+    // (undocumented)
+    init(): void;
+    // (undocumented)
+    lastSetURL: string | null;
+    // (undocumented)
+    location: Location;
+    onUpdateURL(callback: UpdateCallback): void;
+    // (undocumented)
+    _removeEventListener(): void;
+    replaceURL(path: string): void;
+    setURL(path: string): void;
+    willDestroy(): void;
+}
 export default HashLocation;
 
 // (No @packageDocumentation comment for this package)

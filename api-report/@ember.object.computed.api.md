@@ -4,215 +4,151 @@
 
 ```ts
 
-// @public
-export function alias(
-dependentKey: string
-): ComputedProperty<unknown>;
-
-// @public
-export function and(
-...dependentKeys: string[]
-): ComputedProperty<unknown>;
-
-// @public
-export function bool(
-dependentKey: string
-): ComputedProperty<boolean>;
-
-// @public
-export function collect(
-...dependentKeys: string[]
-): ComputedProperty<unknown[]>;
-
-// @public
-class ComputedProperty<Get, Set = Get> {
-    meta(meta: {}): this;
-    // (undocumented)
-    meta(): {};
-    property(...path: string[]): this;
-    readOnly(): this;
-    volatile(): this;
-}
+import { DeprecationOptions } from '@ember/debug';
+import { Revision } from '@glimmer/validator';
+import { UpdatableTag } from '@glimmer/validator';
 
 // @public (undocumented)
-interface ComputedProperty<Get, Set = Get>
-extends PropertyDecorator, ComputedPropertyMarker<Get, Set> {}
-export default ComputedProperty;
+export function alias(altKey: string): AliasDecorator;
 
-// @public
+// @public (undocumented)
+export function and(dependentKey: string, ...additionalDependentKeys: string[]): PropertyDecorator;
+
+// @public (undocumented)
+export function bool(dependentKey: string): PropertyDecorator;
+
+// @public (undocumented)
+export function collect(
+dependentKey: string,
+...additionalDependentKeys: string[]
+): PropertyDecorator;
+
+// @public (undocumented)
 export function deprecatingAlias(
 dependentKey: string,
-options: { id: string; until: string }
-): ComputedProperty<unknown>;
+options: DeprecationOptions
+): PropertyDecorator;
+
+// @public (undocumented)
+export function empty(dependentKey: string): PropertyDecorator;
+
+// @public (undocumented)
+export function equal(dependentKey: string, value: unknown): PropertyDecorator;
 
 // @public
-export function empty(
-dependentKey: string
-): ComputedProperty<boolean>;
+export function expandProperties(pattern: string, callback: (expansion: string) => void): void;
 
-// @public
-export function equal(
-dependentKey: string,
-value: unknown
-): ComputedProperty<boolean>;
-
-// @public
-export function expandProperties(
-pattern: string,
-callback: (expanded: string) => void
-): void;
-
-// @public
+// @public (undocumented)
 export function filter(
 dependentKey: string,
 callback: (value: unknown, index: number, array: unknown[]) => boolean
-): ComputedProperty<unknown[]>;
+): PropertyDecorator;
 
-// @public
+// @public (undocumented)
 export function filter(
 dependentKey: string,
 additionalDependentKeys: string[],
 callback: (value: unknown, index: number, array: unknown[]) => boolean
-): ComputedProperty<unknown[]>;
+): PropertyDecorator;
 
-// @public
+// @public (undocumented)
 export function filterBy(
 dependentKey: string,
 propertyKey: string,
 value?: unknown
-): ComputedProperty<unknown[]>;
+): PropertyDecorator;
 
-// @public
-export function gt(
-dependentKey: string,
-value: number
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function gt(dependentKey: string, value: number): PropertyDecorator;
 
-// @public
-export function gte(
-dependentKey: string,
-value: number
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function gte(dependentKey: string, value: number): PropertyDecorator;
 
-// @public
+// @public (undocumented)
 export function intersect(
-...propertyKeys: string[]
-): ComputedProperty<unknown[]>;
-
-// @public
-export function lt(
 dependentKey: string,
-value: number
-): ComputedProperty<boolean>;
+...additionalDependentKeys: string[]
+): PropertyDecorator;
 
-// @public
-export function lte(
+// @public (undocumented)
+export function lt(dependentKey: string, value: number): PropertyDecorator;
+
+// @public (undocumented)
+export function lte(dependentKey: string, value: number): PropertyDecorator;
+
+// @public (undocumented)
+export function map(
 dependentKey: string,
-value: number
-): ComputedProperty<boolean>;
+callback: (value: unknown, index: number) => boolean
+): PropertyDecorator;
 
-// @public
-export function map<U>(
+// @public (undocumented)
+export function map(
 dependentKey: string,
-callback: (value: unknown, index: number, array: unknown[]) => U
-): ComputedProperty<U[]>;
+additionalDependentKeys: string[],
+callback: (value: unknown, index: number) => boolean
+): PropertyDecorator;
 
-// @public
-export function mapBy(
-dependentKey: string,
-propertyKey: string
-): ComputedProperty<unknown[]>;
+// @public (undocumented)
+export function mapBy(dependentKey: string, propertyKey: string): PropertyDecorator;
 
-// @public
-export function match(
-dependentKey: string,
-regexp: RegExp
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function match(dependentKey: string, value: RegExp): PropertyDecorator;
 
-// @public
-export function max(
-dependentKey: string
-): ComputedProperty<number>;
+// @public (undocumented)
+export function max(dependentKey: string): PropertyDecorator;
 
-// @public
-export function min(
-dependentKey: string
-): ComputedProperty<number>;
+// @public (undocumented)
+export function min(dependentKey: string): PropertyDecorator;
 
-// @public
-export function none(
-dependentKey: string
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function none(dependentKey: string): PropertyDecorator;
 
-// @public
-export function not(
-dependentKey: string
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function not(dependentKey: string): PropertyDecorator;
 
-// @public
-export function notEmpty(
-dependentKey: string
-): ComputedProperty<boolean>;
+// @public (undocumented)
+export function notEmpty(dependentKey: string): PropertyDecorator;
 
-// @public
-export function oneWay(
-dependentKey: string
-): ComputedProperty<unknown>;
+// @public (undocumented)
+export function oneWay(dependentKey: string): PropertyDecorator;
 
-// @public
-export function or(
-...dependentKeys: string[]
-): ComputedProperty<unknown>;
+// @public (undocumented)
+export function or(dependentKey: string, ...additionalDependentKeys: string[]): PropertyDecorator;
 
-// @public
-export function readOnly(
-dependentKey: string
-): ComputedProperty<unknown>;
+// @public (undocumented)
+export function readOnly(dependentKey: string): PropertyDecorator;
 
-// @public
-export function reads(
-dependentKey: string
-): ComputedProperty<unknown>;
+// @public (undocumented)
+export function reads(dependentKey: string): PropertyDecorator;
 
-// @public
-export function setDiff(
-setAProperty: string,
-setBProperty: string
-): ComputedProperty<unknown[]>;
+// @public (undocumented)
+export function setDiff(setAProperty: string, setBProperty: string): PropertyDecorator;
 
-// @public
-export function sort<T>(
+// @public (undocumented)
+export function sort(itemsKey: string, sortDefinition: SortDefinition | string): PropertyDecorator;
+
+// @public (undocumented)
+export function sort(
 itemsKey: string,
-sortDefinition: string | ((itemA: T, itemB: T) => number)
-): ComputedProperty<T[]>;
+additionalDependentKeys: string[],
+sortDefinition: SortDefinition
+): PropertyDecorator;
 
-// @public
-export function sort<T>(
-itemsKey: string,
-dependentKeys: string[],
-sortDefinition: string | ((itemA: T, itemB: T) => number)
-): ComputedProperty<T[]>;
+// @public (undocumented)
+export function sum(dependentKey: string): PropertyDecorator;
 
-// @public
-export function sum(
-dependentKey: string
-): ComputedProperty<number>;
-
-// @public
+// @public (undocumented)
 export function union(
-...propertyKeys: string[]
-): ComputedProperty<unknown[]>;
-
-// @public
-export function uniq(
-propertyKey: string
-): ComputedProperty<unknown[]>;
-
-// @public
-export function uniqBy(
 dependentKey: string,
-propertyKey: string
-): ComputedProperty<any[]>;
+...additionalDependentKeys: string[]
+): PropertyDecorator;
+
+// @public (undocumented)
+export function uniq(dependentKey: string): PropertyDecorator;
+
+// @public (undocumented)
+export function uniqBy(dependentKey: string, propertyKey: string): PropertyDecorator;
 
 // (No @packageDocumentation comment for this package)
 

@@ -4,39 +4,45 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-import { Fix } from '@ember/object/-private/types';
-import { MixinOrLiteral } from '@ember/object/-private/types';
-
 // @public
-class Mixin<T, Base = EmberObject> {
-    __ember_mixin__: never;
-
-    // (undocumented)
-    static create<T, Base = EmberObject>(
-    args?: MixinOrLiteral<T, Base> & ThisType<Fix<T & Base>>
-    ): Mixin<T, Base>;
-
-    // (undocumented)
-    static create<T1, T2, Base = EmberObject>(
-    arg1: MixinOrLiteral<T1, Base> & ThisType<Fix<T1 & Base>>,
-    arg2: MixinOrLiteral<T2, Base> & ThisType<Fix<T2 & Base>>
-    ): Mixin<T1 & T2, Base>;
-
-    // (undocumented)
-    static create<T1, T2, T3, Base = EmberObject>(
-    arg1: MixinOrLiteral<T1, Base> & ThisType<Fix<T1 & Base>>,
-    arg2: MixinOrLiteral<T2, Base> & ThisType<Fix<T2 & Base>>,
-    arg3: MixinOrLiteral<T3, Base> & ThisType<Fix<T3 & Base>>
-    ): Mixin<T1 & T2 & T3, Base>;
-
-    // (undocumented)
-    static create<T1, T2, T3, T4, Base = EmberObject>(
-    arg1: MixinOrLiteral<T1, Base> & ThisType<Fix<T1 & Base>>,
-    arg2: MixinOrLiteral<T2, Base> & ThisType<Fix<T2 & Base>>,
-    arg3: MixinOrLiteral<T3, Base> & ThisType<Fix<T3 & Base>>,
-    arg4: MixinOrLiteral<T4, Base> & ThisType<Fix<T4 & Base>>
-    ): Mixin<T1 & T2 & T3 & T4, Base>;
+class Mixin {
+    // @internal
+    constructor(mixins: Mixin[] | undefined, properties?: {
+        [key: string]: any;
+    });
+    // @internal
+    apply(obj: object, _hideKeys?: boolean): {
+        [key: string]: any;
+    };
+    // @internal (undocumented)
+    applyPartial(obj: object): {
+        [key: string]: any;
+    };
+    static create(...args: any[]): Mixin;
+    // @internal
+    detect(obj: any): boolean;
+    // @internal (undocumented)
+    static _disableDebugSeal?: boolean;
+    // @internal (undocumented)
+    keys(): Set<unknown> | undefined;
+    // @internal (undocumented)
+    mixins: Mixin[] | undefined;
+    // @internal (undocumented)
+    static mixins(obj: object): Mixin[];
+    // @internal (undocumented)
+    ownerConstructor: any;
+    // @internal (undocumented)
+    properties: {
+        [key: string]: any;
+    } | undefined;
+    // @internal
+    reopen(...args: any[]): this | undefined;
+    // @internal (undocumented)
+    toString(): string;
+    // @internal (undocumented)
+    without(...args: any[]): Mixin;
+    // @internal (undocumented)
+    _without: any[] | undefined;
 }
 export default Mixin;
 

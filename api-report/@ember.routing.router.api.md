@@ -4,22 +4,162 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-import RouterDSL from '@ember/routing/-private/router-dsl';
-import Transition from '@ember/routing/-private/transition';
+import Controller from '@ember/controller';
+import EngineInstance from '@ember/engine/instance';
+import { InternalRouteInfo } from 'router_js';
+import { MatchCallback } from 'route-recognizer';
+import { ModelFor } from 'router_js';
+import { Reference } from '@glimmer/reference';
+import { Route as Route_2 } from 'router_js';
+import { RouteInfo } from 'router_js';
+import { RouteInfoWithAttributes } from 'router_js';
+import Router from 'router_js';
+import Service from '@ember/service';
+import { SimpleElement } from '@simple-dom/interface';
+import { Template } from '@glimmer/interfaces';
+import { TemplateFactory } from '@glimmer/interfaces';
+import { Timer } from 'backburner';
+import { Transition } from 'router_js';
+import { TransitionState } from 'router_js';
 
 // @public
-class Router extends EmberObject.extend(Evented) {
-    location: 'history' | 'hash' | 'none' | 'auto';
-    static map(callback: (this: RouterDSL) => void): void;
+class EmberRouter<R extends Route = Route> extends EmberRouter_base implements Evented {
+    constructor(owner: Owner);
+    // (undocumented)
+    _activeQPChanged(queryParameterName: string, newValue: unknown): void;
+    // (undocumented)
+    _bucketCache: BucketCache;
+    // (undocumented)
+    _buildDSL(): DSLImpl;
+    // (undocumented)
+    _cancelSlowTransitionTimer(): void;
+    // (undocumented)
+    _clearHandledError(error: Error): void;
+    // (undocumented)
+    currentPath: string | null;
+    // (undocumented)
+    currentRoute: RouteInfo | RouteInfoWithAttributes | null;
+    // (undocumented)
+    currentRouteName: string | null;
+    // (undocumented)
+    currentState: null | RouterState<R>;
+    // (undocumented)
+    currentURL: string | null;
+    _deserializeQueryParam(value: unknown, defaultType: string): unknown;
+    _deserializeQueryParams(routeInfos: InternalRouteInfo<R>[], queryParams: Record<string, unknown>): void;
+    // (undocumented)
+    _didSetupRouter: boolean;
+    didTransition: typeof defaultDidTransition;
+    // (undocumented)
+    _doTransition(_targetRouteName: string | undefined, models: ModelFor<R>[], _queryParams: Record<string, unknown>, _fromRouterService?: boolean): Transition;
+    // (undocumented)
+    _doURLTransition(routerJsMethod: string, url: string): any;
+    // (undocumented)
+    _engineInfoByRoute: any;
+    // (undocumented)
+    _engineInstances: Record<string, Record<string, EngineInstance>>;
+    // (undocumented)
+    _fireQueryParamTransition(): void;
+    _fullyScopeQueryParams(leafRouteName: string, contexts: ModelFor<R>[], queryParams: {}): void;
+    // (undocumented)
+    generate(name: string, ...args: ModelFor<R>[] | [...ModelFor<R>[], RouteOptions]): string;
+    // (undocumented)
+    _getEngineInstance({ name, instanceId, mountPoint, }: {
+        name: string;
+        instanceId: number;
+        mountPoint: string;
+    }): EngineInstance;
+    _getQPMeta(routeInfo: InternalRouteInfo<R>): QueryParamMeta | undefined;
+    // (undocumented)
+    _handledErrors: Set<unknown>;
+    // (undocumented)
+    _handleSlowTransition(transition: Transition, originRoute: Route): void;
+    // (undocumented)
+    handleURL(url: string): any;
+    // (undocumented)
+    has: (name: string) => boolean;
+    // (undocumented)
+    _hasModuleBasedResolver(): boolean;
+    hasRoute(route: string): boolean;
+    _hydrateUnsuppliedQueryParams(state: TransitionState<R>, queryParams: {}, _fromRouterService: boolean): void;
+    // (undocumented)
+    _initialTransitionStarted: boolean;
+    // (undocumented)
+    _initRouterJs(): void;
+    // (undocumented)
+    intermediateTransitionTo(name: string, ...args: any[]): void;
+    isActive(routeName: string): boolean;
+    isActiveIntent(routeName: string, models: ModelFor<R>[], queryParams: Record<string, unknown>): boolean;
+    // (undocumented)
+    _isErrorHandled(error: Error): boolean;
+    location: string | EmberLocation;
+    static map(callback: DSLCallback): typeof EmberRouter;
+    // (undocumented)
+    _markErrorAsHandled(error: Error): void;
+    // (undocumented)
+    off: (name: string, method: string | ((...args: any[]) => void)) => this;
+    // (undocumented)
+    on: (name: string, method: ((...args: any[]) => void) | string) => this;
+    // (undocumented)
+    one: (name: string, method: string | ((...args: any[]) => void)) => this;
+    _prepareQueryParams(targetRouteName: string, models: ModelFor<R>[], queryParams: Record<string, unknown>, _fromRouterService?: boolean): void;
+    // (undocumented)
+    _processActiveTransitionQueryParams(targetRouteName: string, models: ModelFor<R>[], queryParams: Record<string, unknown>, _queryParams: {}): void;
+    _pruneDefaultQueryParamValues(routeInfos: InternalRouteInfo<R>[], queryParams: Record<string, string | null | undefined>): void;
+    // (undocumented)
+    _qpCache: Record<string, {
+        qps: QueryParam[];
+        map: QueryParamMeta['map'];
+    }>;
+    // (undocumented)
+    _qpUpdates: Set<string>;
+    _queryParamsFor(routeInfos: InternalRouteInfo<R>[]): {
+        qps: QueryParam[];
+        map: Record<string, QueryParam>;
+    };
+    // (undocumented)
+    _queuedQPChanges: Record<string, unknown>;
+    replaceWith(...args: RouteArgs<R>): Transition;
+    reset(): void;
+    // (undocumented)
+    _resetQueuedQueryParameterChanges(): void;
     rootURL: string;
-    transitionTo(name: string, options?: {}): Transition;
     // (undocumented)
-    transitionTo(name: string, ...models: any[]): Transition;
+    static _routePath(routeInfos: InternalRouteInfo<Route>[]): string;
     // (undocumented)
-    transitionTo(name: string, options: {}): Transition;
+    _routerMicrolib: Router<R>;
+    // (undocumented)
+    _routerService: RouterService<R>;
+    // (undocumented)
+    _scheduleLoadingEvent(transition: Transition, originRoute: Route): void;
+    // (undocumented)
+    send(name: string, ...args: any[]): void;
+    _serializeQueryParam(value: unknown, type: string): string | null | undefined;
+    _serializeQueryParams(routeInfos: InternalRouteInfo<R>[], queryParams: Record<string, unknown>): asserts queryParams is Record<string, string | null | undefined>;
+    // (undocumented)
+    _setOutlets(): void;
+    // (undocumented)
+    _setupLocation(): void;
+    // (undocumented)
+    setupRouter(): boolean;
+    // (undocumented)
+    _slowTransitionTimer: Timer | null;
+    startRouting(): void;
+    // (undocumented)
+    targetState: null;
+    // (undocumented)
+    _toplevelView: OutletView | null;
+    transitionTo(...args: RouteArgs<R>): Transition;
+    // (undocumented)
+    trigger: (name: string, ...args: any[]) => unknown;
+    // (undocumented)
+    _updatingQPChanged(queryParameterName: string): void;
+    url: string;
+    // (undocumented)
+    willDestroy(): void;
+    willTransition: typeof defaultWillTransition;
 }
-export default Router;
+export default EmberRouter;
 
 // (No @packageDocumentation comment for this package)
 

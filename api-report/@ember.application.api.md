@@ -4,49 +4,43 @@
 
 ```ts
 
-import { AnyFn } from 'ember/-private/type-utils';
-import ApplicationInstance from '@ember/application/instance';
+import EmberObject from '@ember/object';
 import Engine from '@ember/engine';
-import EventDispatcher from '@ember/application/-private/event-dispatcher';
-import { EventDispatcherEvents } from '@ember/application/types';
-import Registry from '@ember/application/-private/registry';
-import Resolver from 'ember-resolver';
-import { Router } from '@ember/routing';
+import EngineInstance from '@ember/engine/instance';
+import { EngineInstanceOptions } from '@ember/engine/instance';
 
-// @public
+// @public (undocumented)
 class Application extends Engine {
-    advanceReadiness(): void;
-    boot(): Promise<Application>;
-    buildInstance(options?: object): ApplicationInstance;
-    customEvents: EventDispatcherEvents;
-    deferReadiness(): void;
-    eventDispatcher: EventDispatcher;
-    inject(factoryNameOrType: string, property: string, injectionName: string): void;
-    injectTestHelpers(): void;
-    ready: AnyFn;
-    register(fullName: string, factory: unknown, options?: { singleton?: boolean | undefined; instantiate?: boolean | undefined }): void;
     // (undocumented)
-    registry: Registry;
-    removeTestHelpers(): void;
+    __deprecatedInstance__?: ApplicationInstance;
+    // (undocumented)
+    advanceReadiness(): void;
+    // (undocumented)
+    boot(): Promise<this>;
+    // (undocumented)
+    buildInstance(options?: EngineInstanceOptions): ApplicationInstance;
+    // (undocumented)
+    customEvents: Record<string, string | null> | null;
+    // (undocumented)
+    deferReadiness(): void;
+    // (undocumented)
+    eventDispatcher: EventDispatcher;
+    // (undocumented)
+    ready(): void;
+    // (undocumented)
     reset(): void;
-    resolver: Resolver | null;
-    rootElement: HTMLElement | string;
-    Router: Router;
-    setupForTesting(): void;
+    // (undocumented)
+    rootElement: string | Element;
+    // (undocumented)
+    visit(url: string, options?: BootOptions): Promise<ApplicationInstance>;
 }
 export default Application;
 
 // @public
-export function getOwner(object: unknown): unknown;
+export function getOwner(object: any): Owner | undefined;
 
 // @public
-export function onLoad(name: string, callback: AnyFn): unknown;
-
-// @public
-export function runLoadHooks(name: string, object?: {}): unknown;
-
-// @public
-export function setOwner(object: unknown, owner: unknown): void;
+export function setOwner(object: any, owner: Owner): void;
 
 // (No @packageDocumentation comment for this package)
 

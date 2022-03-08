@@ -4,10 +4,36 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-
 // @public
-class HistoryLocation extends EmberObject {}
+class HistoryLocation extends EmberObject implements EmberLocation {
+    // (undocumented)
+    baseURL: string;
+    formatURL(url: string): string;
+    getHash(): string;
+    getURL(): string;
+    // (undocumented)
+    history?: any;
+    // (undocumented)
+    implementation: string;
+    // (undocumented)
+    init(): void;
+    initState(): void;
+    // (undocumented)
+    location: Location;
+    onUpdateURL(callback: UpdateCallback): void;
+    // (undocumented)
+    _popstateHandler?: EventListener;
+    // (undocumented)
+    _previousURL?: string;
+    pushState(path: string): void;
+    // (undocumented)
+    _removeEventListener(): void;
+    replaceState(path: string): void;
+    replaceURL(path: string): void;
+    rootURL: string;
+    setURL(path: string): void;
+    willDestroy(): void;
+}
 export default HistoryLocation;
 
 // (No @packageDocumentation comment for this package)

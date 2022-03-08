@@ -4,48 +4,46 @@
 
 ```ts
 
-import { AnyFn } from 'ember/-private/type-utils';
-import { EmberMethod } from 'ember/-private/type-utils';
-import Mixin from '@ember/object/mixin';
-
 // @public
 interface Evented {
     has(name: string): boolean;
-    off<T>(
+    off<Target>(
     name: string,
-    target: T,
-    method: EmberMethod<T>
+    target: Target,
+    method: string | ((this: Target, ...args: any[]) => void)
     ): this;
     // (undocumented)
-    off(name: string, method: EmberMethod<this>): this;
-    on<T>(
+    off(name: string, method: string | ((...args: any[]) => void)): this;
+    on<Target>(
     name: string,
-    target: T,
-    method: EmberMethod<T>
+    target: Target,
+    method: string | ((this: Target, ...args: any[]) => void)
     ): this;
     // (undocumented)
-    on(name: string, method: EmberMethod<this>): this;
-    one<T>(
+    on(name: string, method: ((...args: any[]) => void) | string): this;
+    // (undocumented)
+    on<Target>(
     name: string,
-    target: T,
-    method: EmberMethod<T>
+    ...args:
+    | [Target, string | ((this: Target, ...args: any[]) => void)]
+    | [((...args: any[]) => void) | string]
+    ): this;
+    one<Target>(
+    name: string,
+    target: Target,
+    method: string | ((this: Target, ...args: any[]) => void)
     ): this;
     // (undocumented)
-    one(name: string, method: EmberMethod<this>): this;
-    trigger(name: string, ...args: unknown[]): any;
+    one(name: string, method: string | ((...args: any[]) => void)): this;
+    trigger(name: string, ...args: any[]): any;
 }
 
 // @public (undocumented)
-const Evented: Mixin<Evented>;
+const Evented: Mixin;
 export default Evented;
 
 // @public
-export function on<F extends AnyFn>(
-...args: [
-...eventNames: string[],
-func: F
-]
-): F;
+export function on<T extends (...args: any[]) => any>(...args: [...eventNames: string[], func: T]): T;
 
 // (No @packageDocumentation comment for this package)
 

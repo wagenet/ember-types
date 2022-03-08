@@ -4,12 +4,9 @@
 
 ```ts
 
-// @public (undocumented)
-function templateOnly(moduleName?: string): TemplateOnlyComponent;
-export default templateOnly;
+import { templateOnlyComponent } from '@glimmer/runtime';
 
-// @public (undocumented)
-export interface TemplateOnlyComponent extends _TemplateOnlyComponent {}
+export default templateOnlyComponent;
 
 // (No @packageDocumentation comment for this package)
 

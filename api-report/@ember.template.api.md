@@ -4,11 +4,11 @@
 
 ```ts
 
-// @public (undocumented)
+// @public
 export function htmlSafe(str: string): SafeString;
 
-// @public (undocumented)
-export function isHTMLSafe(str: unknown): str is SafeString;
+// @public
+export function isHTMLSafe(str: any | null | undefined): str is SafeString;
 
 // (No @packageDocumentation comment for this package)
 
