@@ -4,33 +4,36 @@
 
 ```ts
 
-import ComputedProperty from '@ember/object/computed';
-import EmberObject from '@ember/object';
+// @public
+export function inject(name: string): PropertyDecorator;
+
+// @public (undocumented)
+export function inject(...args: [ElementDescriptor[0], ElementDescriptor[1]]): void;
+
+// @public (undocumented)
+export function inject(...args: ElementDescriptor): DecoratorPropertyDescriptor;
+
+// @public (undocumented)
+export function inject(): PropertyDecorator;
 
 // @public
-export function inject(): ComputedProperty<Service>;
-
-// @public (undocumented)
-export function inject(target: object, propertyKey: string | symbol): void;
-
-// @public (undocumented)
-export function inject<K extends keyof Registry>(name: K): ComputedProperty<Registry[K]>;
-
-// @public (undocumented)
-export interface Registry {}
-
-// @public (undocumented)
-class Service extends EmberObject {}
+class Service extends FrameworkObject {
+    // (undocumented)
+    static isServiceFactory: boolean;
+}
 export default Service;
 
 // @public
-export function service(): ComputedProperty<Service>;
+export function service(name: string): PropertyDecorator;
 
 // @public (undocumented)
-export function service(target: object, propertyKey: string | symbol): void;
+export function service(...args: [ElementDescriptor[0], ElementDescriptor[1]]): void;
 
 // @public (undocumented)
-export function service<K extends keyof Registry>(name: K): ComputedProperty<Registry[K]>;
+export function service(...args: ElementDescriptor): DecoratorPropertyDescriptor;
+
+// @public (undocumented)
+export function service(): PropertyDecorator;
 
 // (No @packageDocumentation comment for this package)
 

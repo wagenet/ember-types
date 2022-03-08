@@ -4,10 +4,23 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-
 // @public
-class NoneLocation extends EmberObject {}
+class NoneLocation extends EmberObject implements EmberLocation {
+    formatURL(url: string): string;
+    getURL(): string;
+    handleURL(url: string): void;
+    // (undocumented)
+    implementation: string;
+    // (undocumented)
+    initState(): void;
+    onUpdateURL(callback: (url: string) => void): void;
+    // (undocumented)
+    path: string;
+    rootURL: string;
+    setURL(path: string): void;
+    // (undocumented)
+    updateCallback: UpdateCallback;
+}
 export default NoneLocation;
 
 // (No @packageDocumentation comment for this package)

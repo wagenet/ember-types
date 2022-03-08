@@ -4,48 +4,27 @@
 
 ```ts
 
-import EmberObject from '@ember/object';
-import { Opaque } from 'ember/-private/type-utils';
+import { Dict } from '@glimmer/interfaces';
 
 // @public
-export interface FunctionBasedHelper<S extends HelperSignature> extends Opaque<S> {}
+interface Helper {
+    compute(params: unknown[], hash: Dict<unknown>): unknown;
+}
 
-// @public
-class Helper<S extends HelperSignature = HelperSignature> extends EmberObject {
-    compute(positional: S['PositionalArgs'], named: S['NamedArgs']): S['Return'];
-    static helper<
-    P extends NonNullable<HelperSignature['PositionalArgs']>,
-    N extends NonNullable<HelperSignature['NamedArgs']>,
-    R extends NonNullable<HelperSignature['Return']>,
-    >(
-    helper: (positional: P, named: N) => R
-    ): Helper<{ PositionalArgs: P, NamedArgs: N, Return: R }>;
+// @public (undocumented)
+class Helper extends FrameworkObject {
+    // (undocumented)
+    static [IS_CLASSIC_HELPER]: boolean;
+    // (undocumented)
+    init(): void;
+    // (undocumented)
+    static isHelperFactory: boolean;
     recompute(): void;
 }
 export default Helper;
 
 // @public
-export function helper<
-P extends NonNullable<HelperSignature['PositionalArgs']>,
-N extends NonNullable<HelperSignature['NamedArgs']>,
-R extends NonNullable<HelperSignature['Return']>,
->(
-helperFn: (positional: P, named: N) => R
-): FunctionBasedHelper<{
-    PositionalArgs: P,
-    NamedArgs: N,
-    Return: R
-}>;
-
-// @public
-export interface HelperSignature {
-    // (undocumented)
-    NamedArgs?: Record<string, unknown>;
-    // (undocumented)
-    PositionalArgs?: unknown[];
-    // (undocumented)
-    Return?: unknown;
-}
+export function helper<T, P extends unknown[], N extends Dict<unknown>>(helperFn: HelperFunction<T, P, N>): HelperFactory<SimpleHelper<T, P, N>>;
 
 // (No @packageDocumentation comment for this package)
 

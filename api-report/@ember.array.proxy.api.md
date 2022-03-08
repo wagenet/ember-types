@@ -4,20 +4,20 @@
 
 ```ts
 
-import ComputedProperty from '@ember/object/computed';
-import EmberObject from '@ember/object';
-import MutableArray from '@ember/array/mutable';
-
-// @public
-interface ArrayProxy<T> extends MutableArray<T> {}
+// @public (undocumented)
+interface ArrayProxy<T, C extends EmberArray<T> = EmberArray<T>> extends MutableArray<T> {
+    // (undocumented)
+    arrangedContent: C;
+    // (undocumented)
+    content: C;
+    // (undocumented)
+    objectAtContent(idx: number): T | undefined;
+    // (undocumented)
+    replaceContent(idx: number, amt: number, objects: T[]): void;
+}
 
 // @public (undocumented)
-class ArrayProxy<T> extends EmberObject.extend(MutableArray as {}) {
-    // (undocumented)
-    content: T[] | EmberArrayLike<T>;
-
-    objectAtContent(idx: number): T | undefined;
-}
+class ArrayProxy<T, C extends EmberArray<T>> extends EmberObject {}
 export default ArrayProxy;
 
 // (No @packageDocumentation comment for this package)

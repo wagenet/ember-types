@@ -4,59 +4,46 @@
 
 ```ts
 
-import CoreObject from '@ember/object/core';
-import Mixin from '@ember/object/mixin';
-import { ObserverMethod } from '@ember/object/-private/types';
-import { UnwrapComputedPropertyGetter } from '@ember/object/-private/types';
-import { UnwrapComputedPropertyGetters } from '@ember/object/-private/types';
-import { UnwrapComputedPropertySetters } from '@ember/object/-private/types';
-
 // @public
 interface Observable {
-    addObserver<Target>(
-    key: keyof this,
-    target: Target,
-    method: ObserverMethod<Target, this>
-    ): this;
+    addObserver<Target>(key: keyof this, target: Target, method: ObserverMethod<Target, this>): this;
+
     // (undocumented)
     addObserver(key: keyof this, method: ObserverMethod<this, this>): this;
-    cacheFor<K extends keyof this>(
-    key: K
-    ): UnwrapComputedPropertyGetter<this[K]> | undefined;
+
+    cacheFor<K extends keyof this>(key: K): unknown;
+
     decrementProperty(keyName: keyof this, decrement?: number): number;
-    get<K extends keyof this>(key: K): UnwrapComputedPropertyGetter<this[K]>;
-    getProperties<K extends keyof this>(
-    list: K[]
-    ): Pick<UnwrapComputedPropertyGetters<this>, K>;
+
+    get(key: string): unknown;
+
+    getProperties<L extends string[]>(list: L): { [Key in L[number]]: unknown };
+
     // (undocumented)
-    getProperties<K extends keyof this>(
-    ...list: K[]
-    ): Pick<UnwrapComputedPropertyGetters<this>, K>;
+    getProperties<L extends string[]>(...list: L): { [Key in L[number]]: unknown };
+
     incrementProperty(keyName: keyof this, increment?: number): number;
+
     notifyPropertyChange(keyName: string): this;
+
     removeObserver<Target>(
     key: keyof this,
     target: Target,
     method: ObserverMethod<Target, this>
     ): this;
+
     // (undocumented)
     removeObserver(key: keyof this, method: ObserverMethod<this, this>): this;
-    set<K extends keyof this>(key: K, value: this[K]): this[K];
-    // (undocumented)
-    set<T>(key: keyof this, value: T): T;
-    setProperties<K extends keyof this>(
-    hash: Pick<this, K>
-    ): Pick<UnwrapComputedPropertySetters<this>, K>;
-    // (undocumented)
-    setProperties<K extends keyof this>(
-    // tslint:disable-next-line:unified-signatures
-    hash: { [KK in K]: any }
-    ): Pick<UnwrapComputedPropertySetters<this>, K>;
+
+    set<T>(key: string, value: T): T;
+
+    setProperties<T extends Record<string, any>>(hash: T): T;
+
     toggleProperty(keyName: keyof this): boolean;
 }
 
 // @public (undocumented)
-const Observable: Mixin<Observable, CoreObject>;
+const Observable: Mixin;
 export default Observable;
 
 // (No @packageDocumentation comment for this package)

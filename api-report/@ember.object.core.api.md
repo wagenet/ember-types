@@ -4,232 +4,64 @@
 
 ```ts
 
-import { EmberClassArguments } from '@ember/object/-private/types';
-import { EmberClassConstructor } from '@ember/object/-private/types';
-import { EmberInstanceArguments } from '@ember/object/-private/types';
-import { Fix } from '@ember/object/-private/types';
-import { MixinOrLiteral } from '@ember/object/-private/types';
-import { Objectify } from '@ember/object/-private/types';
-import { UnwrapComputedPropertySetters } from '@ember/object/-private/types';
-
 // @public (undocumented)
 class CoreObject {
-    constructor(properties?: object);
+    constructor(owner: Owner);
 
-    concatenatedProperties: string[] | null;
-
-    // (undocumented)
-    static create<Class extends typeof CoreObject>(
-    this: Class
-    ): InstanceType<Class>;
+    concatenatedProperties: string[];
 
     // (undocumented)
-    static create<
-    Class extends typeof CoreObject,
-    T1 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >
-    >(
+    static create<Class extends typeof CoreObject, Args extends Array<Record<string, any>>>(
     this: Class,
-    arg1: T1 & ThisType<T1 & InstanceType<Class>>
-    ): InstanceType<Class> & T1;
+    ...args: Args
+    ): InstanceType<Class> & MergeArray<Args>;
 
-    // (undocumented)
-    static create<
-    Class extends typeof CoreObject,
-    T1 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >,
-    T2 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >
-    >(
-    this: Class,
-    arg1: T1 & ThisType<T1 & InstanceType<Class>>,
-    arg2: T2 & ThisType<T2 & InstanceType<Class>>
-    ): InstanceType<Class> & T1 & T2;
+    destroy(): void;
 
-    // (undocumented)
-    static create<
-    Class extends typeof CoreObject,
-    T1 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >,
-    T2 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >,
-    T3 extends EmberInstanceArguments<
-    UnwrapComputedPropertySetters<InstanceType<Class>>
-    >
-    >(
-    this: Class,
-    arg1: T1 & ThisType<T1 & InstanceType<Class>>,
-    arg2: T2 & ThisType<T2 & InstanceType<Class>>,
-    arg3: T3 & ThisType<T3 & InstanceType<Class>>
-    ): InstanceType<Class> & T1 & T2 & T3;
+    // @internal (undocumented)
+    static detect<Statics, Instance>(
+    this: Statics & EmberClassConstructor<Instance>,
+    obj: any
+    ): obj is Readonly<Statics> & EmberClassConstructor<Instance>;
 
-    destroy(): CoreObject;
+    // @internal (undocumented)
+    static detectInstance<Instance>(this: EmberClassConstructor<Instance>, obj: any): obj is Instance;
 
-    static eachComputedProperty(
-    callback: (...args: any[]) => unknown,
-    binding: {}
-    ): void;
+    // @internal
+    static eachComputedProperty(callback: (...args: any[]) => any, binding: {}): void;
 
-    // (undocumented)
+    // @internal (undocumented)
     static extend<Statics, Instance>(
-    this: Statics & EmberClassConstructor<Instance>
-    ): Objectify<Statics> & EmberClassConstructor<Instance>;
-
-    // (undocumented)
-    static extend<
-    Statics,
-    Instance extends B1,
-    T1 extends EmberClassArguments,
-    B1
-    >(
     this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>
-    ): Objectify<Statics> & EmberClassConstructor<T1 & Instance>;
-
-    // (undocumented)
-    static extend<
-    Statics,
-    Instance extends B1 & B2,
-    T1 extends EmberClassArguments,
-    B1,
-    T2 extends EmberClassArguments,
-    B2
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>,
-    arg2: MixinOrLiteral<T2, B2> & ThisType<Fix<Instance & T1 & T2>>
-    ): Objectify<Statics> & EmberClassConstructor<T1 & T2 & Instance>;
-
-    // (undocumented)
-    static extend<
-    Statics,
-    Instance extends B1 & B2 & B3,
-    T1 extends EmberClassArguments,
-    B1,
-    T2 extends EmberClassArguments,
-    B2,
-    T3 extends EmberClassArguments,
-    B3
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>,
-    arg2: MixinOrLiteral<T2, B2> & ThisType<Fix<Instance & T1 & T2>>,
-    arg3: MixinOrLiteral<T3, B3> & ThisType<Fix<Instance & T1 & T2 & T3>>
-    ): Objectify<Statics> & EmberClassConstructor<T1 & T2 & T3 & Instance>;
-
-    // (undocumented)
-    static extend<
-    Statics,
-    Instance extends B1 & B2 & B3 & B4,
-    T1 extends EmberClassArguments,
-    B1,
-    T2 extends EmberClassArguments,
-    B2,
-    T3 extends EmberClassArguments,
-    B3,
-    T4 extends EmberClassArguments,
-    B4
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>,
-    arg2: MixinOrLiteral<T2, B2> & ThisType<Fix<Instance & T1 & T2>>,
-    arg3: MixinOrLiteral<T3, B3> & ThisType<Fix<Instance & T1 & T2 & T3>>,
-    arg4: MixinOrLiteral<T4, B4> &
-    ThisType<Fix<Instance & T1 & T2 & T3 & T4>>
-    ): Objectify<Statics> & EmberClassConstructor<T1 & T2 & T3 & T4 & Instance>;
+    ...args: any[]
+    ): Readonly<Statics> & CoreObjectClass<Instance>;
 
     init(): void;
 
-    // (undocumented)
+    // @internal (undocumented)
     static isClass: boolean;
 
     isDestroyed: boolean;
 
     isDestroying: boolean;
 
-    // (undocumented)
+    // @internal (undocumented)
     static isMethod: boolean;
 
+    // @internal
     static metaForProperty(key: string): {};
 
-    // (undocumented)
-    static reopen<Statics, Instance>(
-    this: Statics & EmberClassConstructor<Instance>
-    ): Objectify<Statics> & EmberClassConstructor<Instance>;
+    // @internal (undocumented)
+    static reopen(...args: any[]): any;
 
-    // (undocumented)
-    static reopen<
-    Statics,
-    Instance extends B1,
-    T1 extends EmberClassArguments,
-    B1
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>
-    ): Objectify<Statics> & EmberClassConstructor<Instance & T1>;
+    // @internal (undocumented)
+    static reopenClass(...args: any[]): any;
 
-    // (undocumented)
-    static reopen<
-    Statics,
-    Instance extends B1 & B2,
-    T1 extends EmberClassArguments,
-    B1,
-    T2 extends EmberClassArguments,
-    B2
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>,
-    arg2: MixinOrLiteral<T2, B2> & ThisType<Fix<Instance & T1 & T2>>
-    ): Objectify<Statics> & EmberClassConstructor<Instance & T1 & T2>;
-
-    // (undocumented)
-    static reopen<
-    Statics,
-    Instance extends B1 & B2 & B3,
-    T1 extends EmberClassArguments,
-    B1,
-    T2 extends EmberClassArguments,
-    B2,
-    T3 extends EmberClassArguments,
-    B3
-    >(
-    this: Statics & EmberClassConstructor<Instance>,
-    arg1: MixinOrLiteral<T1, B1> & ThisType<Fix<Instance & T1>>,
-    arg2: MixinOrLiteral<T2, B2> & ThisType<Fix<Instance & T1 & T2>>,
-    arg3: MixinOrLiteral<T3, B3> & ThisType<Fix<Instance & T1 & T2 & T3>>
-    ): Objectify<Statics> & EmberClassConstructor<Instance & T1 & T2 & T3>;
-
-    // (undocumented)
-    static reopenClass<Statics>(this: Statics): Statics;
-
-    // (undocumented)
-    static reopenClass<Statics, T1 extends EmberClassArguments>(
-    this: Statics,
-    arg1: T1
-    ): Statics & T1;
-
-    // (undocumented)
-    static reopenClass<
-    Statics,
-    T1 extends EmberClassArguments,
-    T2 extends EmberClassArguments
-    >(this: Statics, arg1: T1, arg2: T2): Statics & T1 & T2;
-
-    // (undocumented)
-    static reopenClass<
-    Statics,
-    T1 extends EmberClassArguments,
-    T2 extends EmberClassArguments,
-    T3 extends EmberClassArguments
-    >(this: Statics, arg1: T1, arg2: T2, arg3: T3): Statics & T1 & T2 & T3;
-
-    // (undocumented)
+    // @internal (undocumented)
     _super(...args: any[]): any;
+
+    // @internal (undocumented)
+    static superclass: unknown;
 
     toString(): string;
 

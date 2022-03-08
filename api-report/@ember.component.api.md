@@ -4,69 +4,61 @@
 
 ```ts
 
-import CoreView from '@ember/component/-private/core-view';
-import { Opaque } from 'ember/-private/type-utils';
+import { clientBuilder } from '@glimmer/runtime';
+import { CompileTimeCompilationContext } from '@glimmer/interfaces';
+import { CompileTimeResolver } from '@glimmer/interfaces';
+import { componentCapabilities } from '@glimmer/manager';
+import { ComponentManager } from '@glimmer/interfaces';
+import { CurriedValue } from '@glimmer/runtime';
+import { Cursor } from '@glimmer/interfaces';
+import { DebugRenderTree } from '@glimmer/interfaces';
+import { DynamicScope as DynamicScope_2 } from '@glimmer/interfaces';
+import { ElementBuilder } from '@glimmer/interfaces';
+import { Environment } from '@glimmer/interfaces';
+import { getComponentTemplate } from '@glimmer/manager';
+import { HelperDefinitionState } from '@glimmer/interfaces';
+import Mixin$1 from '@ember/object/mixin';
+import { ModifierDefinitionState } from '@glimmer/interfaces';
+import { Option as Option_2 } from '@glimmer/interfaces';
+import { Reference } from '@glimmer/reference';
+import { RenderResult } from '@glimmer/interfaces';
+import { ResolvedComponentDefinition } from '@glimmer/interfaces';
+import { RuntimeContext } from '@glimmer/interfaces';
+import { RuntimeResolver } from '@glimmer/interfaces';
+import { setComponentTemplate } from '@glimmer/manager';
+import { SimpleDocument } from '@simple-dom/interface';
+import { SimpleElement } from '@simple-dom/interface';
+import { SimpleNode } from '@simple-dom/interface';
+import { Template } from '@glimmer/interfaces';
+import { TemplateFactory } from '@glimmer/interfaces';
 
 // @public (undocumented)
-export interface Capabilities {
+export let capabilities: typeof componentCapabilities;
+
+// @public (undocumented)
+interface Component extends CoreView, ChildViewsSupport, ViewStateSupport, ClassNamesSupport, TargetActionSupport, ActionSupport, ViewSupport {
     // (undocumented)
-    [CAPABILITIES]: true;
+    attributeBindings?: string[];
+    layout?: TemplateFactory | Template;
+    layoutName?: string;
 }
 
 // @public (undocumented)
-class Component extends CoreView.extend(ViewMixin, ClassNamesSupport) {
-    // methods
-    ariaRole: string;
-    // properties
-    didReceiveAttrs(): void;
-    // properties
-    didRender(): void;
-    // properties
-    didUpdate(): void;
-    // properties
-    didUpdateAttrs(): void;
-    // properties
-    elementId: string;
-    // properties
-    layout: TemplateFactory | string;
-    // properties
-    static positionalParams: string[] | string;
-    // properties
-    // (undocumented)
-    readDOMAttr(name: string): string;
-    // properties
-    static reopen(): never;
-    // properties
-    willRender(): void;
-    // properties
-    willUpdate(): void;
-}
+const Component: ComponentClass;
 export default Component;
 
-// @public (undocumented)
-export interface ComponentManager<ComponentStateBucket> {
-    // (undocumented)
-    capabilities: ComponentCapabilities;
-    // (undocumented)
-    createComponent(factory: object, args: Arguments): ComponentStateBucket;
-    // (undocumented)
-    getContext(instance: ComponentStateBucket): unknown;
-}
+export { getComponentTemplate }
 
 // @public (undocumented)
-export interface Input extends Opaque<'component:input'> {}
+export const Input: OpaqueInternalComponentConstructor;
 
 // @public
-export const Input: Input;
+export function setComponentManager<T extends object>(manager: (owner: Owner) => ComponentManager<unknown>, obj: T): T;
 
-// @public
-export function setComponentManager<T>(managerFactory: (owner: unknown) => ComponentManager<unknown>, object: T): T;
+export { setComponentTemplate }
 
 // @public (undocumented)
-export interface Textarea extends Opaque<'component:textarea'> {}
-
-// @public
-export const Textarea: Textarea;
+export const Textarea: OpaqueInternalComponentConstructor;
 
 // (No @packageDocumentation comment for this package)
 

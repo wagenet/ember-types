@@ -4,62 +4,119 @@
 
 ```ts
 
+import { CapturedRenderNode } from '@glimmer/interfaces';
+
 // @public
-export function assert(desc: string): never;
+export let assert: (desc: string, condition?: unknown) => asserts condition;
+
+// @public
+export function captureRenderTree(app: Owner): CapturedRenderNode[];
 
 // @public (undocumented)
-export function assert(desc: string, test: unknown): asserts test;
+export let debug: DebugFunc;
 
 // @public (undocumented)
-export interface Available { // (undocumented)
-    available: string; }
+export let debugFreeze: DebugFreezeFunc;
 
-// @public
-export function debug(message: string): void;
+// @public (undocumented)
+export type DebugFreezeFunc = (obj: object) => void;
 
-// @public
-export function deprecate(
-message: string,
-test: boolean,
-options: {
-    id: string;
-    until: string;
-    url?: string | undefined;
+// @public (undocumented)
+export type DebugFunc = (message: string) => void;
+
+// @public (undocumented)
+export type DebugFunctionType = 'assert' | 'info' | 'warn' | 'debug' | 'deprecate' | 'debugSeal' | 'debugFreeze' | 'runInDebug' | 'deprecateFunc';
+
+// @public (undocumented)
+export let debugSeal: DebugSealFunc;
+
+// @public (undocumented)
+export type DebugSealFunc = (obj: object) => void;
+
+// @public (undocumented)
+export let deprecate: DeprecateFunc;
+
+// @public (undocumented)
+export let deprecateFunc: DeprecateFuncFunc;
+
+// @public (undocumented)
+export type DeprecateFuncFunc = (message: string, options: DeprecationOptions, func: Function) => Function;
+
+// @public (undocumented)
+export interface DeprecationOptions {
+    // (undocumented)
     for: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
     since: Available | Enabled;
-},
-): void;
+    // (undocumented)
+    until: string;
+    // (undocumented)
+    url?: string;
+}
 
 // @public (undocumented)
-export interface Enabled extends Available { // (undocumented)
-    enabled: string; }
-
-// @public
-export function registerDeprecationHandler(
-handler: (
-message: string,
-options: { id: string; until: string } | undefined,
-next: (message: string, options?: { id: string; until: string }) => void,
-) => void,
-): void;
-
-// @public
-export function registerWarnHandler(
-handler: (
-message: string,
-options: { id: string } | undefined,
-next: (message: string, options?: { id: string }) => void,
-) => void,
-): void;
-
-// @public
-export function runInDebug(func: () => unknown): void;
-
-// @public
-export function warn(message: string, test: boolean, options: { id: string }): void;
+export type GetDebugFunction = {
+    (type: 'assert'): typeof assert;
+    (type: 'info'): InfoFunc;
+    (type: 'warn'): WarnFunc;
+    (type: 'debug'): DebugFunc;
+    (type: 'debugSeal'): DebugSealFunc;
+    (type: 'debugFreeze'): DebugFreezeFunc;
+    (type: 'deprecateFunc'): DeprecateFuncFunc;
+    (type: 'deprecate'): DeprecateFunc;
+    (type: 'runInDebug'): RunInDebugFunc;
+};
 
 // @public (undocumented)
-export function warn(message: string, options: { id: string }): void;
+export let getDebugFunction: GetDebugFunction;
+
+// @public (undocumented)
+export let info: InfoFunc;
+
+// @public (undocumented)
+export type InfoFunc = (message: string, options: object) => void;
+
+// @public
+export function inspect(this: any, obj: any | null | undefined): string;
+
+// @public (undocumented)
+export function isTesting(): boolean;
+
+// @public
+export let registerDeprecationHandler: (handler: HandlerCallback<DeprecationOptions>) => void;
+
+// @public (undocumented)
+export let registerWarnHandler: RegisterHandlerFunc;
+
+// @public (undocumented)
+export let runInDebug: RunInDebugFunc;
+
+// @public (undocumented)
+export type RunInDebugFunc = (func: () => void) => void;
+
+// @public (undocumented)
+export type SetDebugFunction = {
+    (type: 'assert', func: typeof assert): typeof assert;
+    (type: 'info', func: InfoFunc): InfoFunc;
+    (type: 'warn', func: WarnFunc): WarnFunc;
+    (type: 'debug', func: DebugFunc): DebugFunc;
+    (type: 'debugSeal', func: DebugSealFunc): DebugSealFunc;
+    (type: 'debugFreeze', func: DebugFreezeFunc): DebugFreezeFunc;
+    (type: 'deprecateFunc', func: DeprecateFuncFunc): DeprecateFuncFunc;
+    (type: 'deprecate', func: DeprecateFunc): DeprecateFunc;
+    (type: 'runInDebug', func: RunInDebugFunc): RunInDebugFunc;
+};
+
+// @public (undocumented)
+export let setDebugFunction: SetDebugFunction;
+
+// @public (undocumented)
+export function setTesting(value: boolean): void;
+
+// @public (undocumented)
+export let warn: WarnFunc;
 
 // (No @packageDocumentation comment for this package)
 

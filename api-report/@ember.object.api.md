@@ -4,101 +4,59 @@
 
 ```ts
 
-import ComputedProperty from '@ember/object/computed';
-import { ComputedPropertyCallback } from '@ember/object/-private/types';
-import CoreObject from '@ember/object/core';
-import { UnwrapComputedPropertyGetter } from '@ember/object/-private/types';
-import { UnwrapComputedPropertyGetters } from '@ember/object/-private/types';
-import { UnwrapComputedPropertySetter } from '@ember/object/-private/types';
-import { UnwrapComputedPropertySetters } from '@ember/object/-private/types';
+import { Revision } from '@glimmer/validator';
+import { UpdatableTag } from '@glimmer/validator';
 
 // @public (undocumented)
-export const action: MethodDecorator;
+export let action: MethodDecorator;
 
 // @public
-export function computed(...dependentKeys: string[]): MethodDecorator;
+export function computed(target: object, propertyName: string, descriptor: DecoratorPropertyDescriptor): DecoratorPropertyDescriptor | void;
+
+// @public (undocumented)
+export function computed(...dependentKeys: string[]): ComputedDecorator;
+
+// @public (undocumented)
+export function computed(...args: ComputedDecoratorKeysAndConfig): ComputedDecorator;
+
+// @public (undocumented)
+export function computed(callback: ComputedPropertyCallback): ComputedDecorator;
 
 // @public
-export function computed<Get, Set = Get>(
-...args: [
-...dependentKeys: string[],
-callback: ComputedPropertyCallback<Get, Set>
-]
-): ComputedProperty<Get, Set>;
+export function defineProperty(obj: object, keyName: string, desc?: ExtendedMethodDecorator | PropertyDescriptor | undefined | null, data?: any | undefined | null, _meta?: Meta): void;
 
-// @public
-export function defineProperty(
-obj: object,
-keyName: string,
-desc: PropertyDescriptor | ComputedProperty<unknown>,
-meta?: unknown
-): void;
+// @public (undocumented)
+interface EmberObject extends CoreObject, Observable {}
 
-// @public
-export function defineProperty(
-obj: object,
-keyName: string,
-desc: undefined,
-data: unknown,
-): void;
-
-// @public
-class EmberObject extends CoreObject.extend(Observable) {}
+// @public (undocumented)
+class EmberObject extends CoreObject {}
 export default EmberObject;
 
 // @public
-export function get<T, K extends keyof T>(
-obj: T,
-key: K
-): UnwrapComputedPropertyGetter<T[K]>;
-
-// @public
-export function getProperties<T, K extends keyof T>(
-obj: T,
-list: K[]
-): Pick<UnwrapComputedPropertyGetters<T>, K>;
+export function get<T extends object, K extends keyof T>(obj: T, keyName: K): T[K];
 
 // @public (undocumented)
-export function getProperties<T, K extends keyof T>(
-obj: T,
-...list: K[]
-): Pick<UnwrapComputedPropertyGetters<T>, K>;
+export function get(obj: unknown, keyName: string): unknown;
+
+// @public
+export function getProperties<L extends string[]>(obj: unknown, list: L): Record<L[number], unknown>;
 
 // @public (undocumented)
-export function notifyPropertyChange(obj: object, keyName: string): void;
+export function getProperties<L extends string[]>(obj: unknown, ...list: L): Record<L[number], unknown>;
 
 // @public
-export function observer<Fn extends (target: any, key: string) => void>(
-...args: [
-...propertyNames: string[],
-func: Fn,
-]
-): Fn;
+export function observer<T extends (...args: any[]) => any>(...args: [propertyName: string, ...additionalPropertyNames: string[], func: T] | [ObserverDefinition<T>]): T;
 
 // @public
-export function set<T, K extends keyof T>(
-obj: T,
-key: K,
-value: UnwrapComputedPropertySetter<T[K]>
-): UnwrapComputedPropertyGetter<T[K]>;
-
-// @public (undocumented)
-export function set<T, K extends keyof T>(obj: T, key: K, value: T[K]): T[K];
+export function set<T>(obj: object, keyName: string, value: T, tolerant?: boolean): T;
 
 // @public
-export function setProperties<T, K extends keyof T>(
-obj: T,
-hash: Pick<UnwrapComputedPropertySetters<T>, K>
-): Pick<UnwrapComputedPropertyGetters<T>, K>;
-
-// @public (undocumented)
-export function setProperties<T, K extends keyof T>(
-obj: T,
-hash: Pick<T, K>
-): Pick<T, K>;
+export function setProperties<TProperties extends {
+    [key: string]: any;
+}>(obj: object, properties: TProperties): TProperties;
 
 // @public
-export function trySet(root: object, path: string, value: any): any;
+export function trySet<T>(root: object, path: string, value: T): T | undefined;
 
 // (No @packageDocumentation comment for this package)
 

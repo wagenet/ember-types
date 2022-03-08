@@ -4,29 +4,44 @@
 
 ```ts
 
-import EmberArray from '@ember/array';
-import Enumerable from '@ember/array/-private/enumerable';
-import Mixin from '@ember/object/mixin';
-import MutableEnumerable from '@ember/array/-private/mutable-enumerable';
-
-// @public
-interface MutableArray<T> extends EmberArray<T>, MutableEnumerable<T> {
+// @public (undocumented)
+interface MutableArray<T> extends EmberArray<T>, MutableEnumerable {
+    // (undocumented)
+    addObject(obj: T): this;
+    // (undocumented)
+    addObjects(objects: T[]): this;
+    // (undocumented)
     clear(): this;
+    // (undocumented)
     insertAt(idx: number, object: T): this;
-    popObject(): T;
-    pushObject(obj: T): T;
-    pushObjects(objects: Enumerable<T>): this;
-    removeAt(start: number, len?: number): this;
-    replace(idx: number, amt: number, objects: T[]): this;
+    // (undocumented)
+    popObject(): T | undefined;
+    // (undocumented)
+    pushObject(obj: T): this;
+    // (undocumented)
+    pushObjects(objects: T[]): this;
+    // (undocumented)
+    removeAt(start: number, len: number): this;
+    // (undocumented)
+    removeObject(object: T): this;
+    // (undocumented)
+    removeObjects(objects: T[]): this;
+    // (undocumented)
+    replace(idx: number, amt: number, objects: T[]): void;
+    // (undocumented)
     reverseObjects(): this;
-    setObjects(objects: EmberArray<T>): this;
-    shiftObject(): T;
-    unshiftObject(obj: T): T;
-    unshiftObjects(objects: Enumerable<T>): this;
+    // (undocumented)
+    setObjects(object: T[]): this;
+    // (undocumented)
+    shiftObject(): T | null | undefined;
+    // (undocumented)
+    unshiftObject(object: T): this;
+    // (undocumented)
+    unshiftObjects(objects: T[]): this;
 }
 
-// @public (undocumented)
-const MutableArray: Mixin<MutableArray<unknown>>;
+// @public
+const MutableArray: Mixin;
 export default MutableArray;
 
 // (No @packageDocumentation comment for this package)

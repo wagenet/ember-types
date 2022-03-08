@@ -4,135 +4,142 @@
 
 ```ts
 
-import { AnyFn } from 'ember/-private/type-utils';
-import { EmberMethod } from 'ember/-private/type-utils';
-import { EmberMethodParams } from 'ember/-private/type-utils';
-import { EmberMethodReturn } from 'ember/-private/type-utils';
-import { EmberRunTimer } from '@ember/runloop/types';
+import Backburner from 'backburner';
+import { DeferredActionQueues } from 'backburner';
+import { Timer } from 'backburner';
+
+// @public (undocumented)
+export const _backburner: Backburner;
 
 // @public
 export function begin(): void;
 
 // @public
-export function bind<T, M extends EmberMethod<T>>(
-target: T,
-method: M,
-...args: any[]
-): (...args: any[]) => EmberMethodReturn<T, M>;
-
-// @public
-export function cancel(timer: EmberRunTimer): boolean;
-
-// @public
-export function debounce(
-method: AnyFn,
-wait: number,
-immediate?: boolean
-): EmberRunTimer;
+export function bind<T, F extends (this: T, ...args: any[]) => any, A extends PartialParams<Parameters<F>>>(target: T, method: F, ...args: A): (...args: RemainingParams<A, Parameters<F>>) => ReturnType<F> | void;
 
 // @public (undocumented)
-export function debounce<Target, M extends EmberMethod<Target>>(
-...args: [
-target: Target,
-method: M,
-...args: EmberMethodParams<Target, M>,
-wait: number,
+export function bind<F extends (...args: any[]) => any, A extends PartialParams<Parameters<F>>>(method: F, ...args: A): (...args: RemainingParams<A, Parameters<F>>) => ReturnType<F> | void;
+
+// @public (undocumented)
+export function bind<T, U extends keyof T, A extends T[U] extends (...args: any[]) => any ? PartialParams<Parameters<T[U]>> : []>(target: T, method: U, ...args: A): T[U] extends (...args: any[]) => any ? (...args: RemainingParams<A, Parameters<T[U]>>) => ReturnType<T[U]> | void : never;
+
+// @public
+export function cancel(timer: Timer): boolean;
+
+// @public (undocumented)
+export function _cancelTimers(): void;
+
+// @public
+export function debounce<F extends (...args: any[]) => any>(method: F, ...args: [...args: Parameters<F>, wait: string | number, immediate?: boolean]): Timer;
+
+// @public (undocumented)
+export function debounce<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: [...args: Parameters<F>, wait: string | number, immediate?: boolean]): Timer;
+
+// @public (undocumented)
+export function debounce<T, U extends keyof T>(target: T, method: U, ...args: [
+...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : [],
+wait: string | number,
 immediate?: boolean
-]
-): EmberRunTimer;
+]): Timer;
 
 // @public
 export function end(): void;
 
-// @public
-export function join<M extends AnyFn>(method: M, ...args: Parameters<M>): ReturnType<M> | undefined;
+// @public (undocumented)
+export function _getCurrentRunLoop(): DeferredActionQueues | null;
 
 // @public (undocumented)
-export function join<T, M extends EmberMethod<T>>(
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>
-): EmberMethodReturn<T, M> | undefined;
+export function _hasScheduledTimers(): boolean;
 
 // @public
-export function later(method: AnyFn, wait: number): EmberRunTimer;
+export function join<F extends (...args: any[]) => any>(method: F, ...args: Parameters<F>): ReturnType<F> | void;
 
 // @public (undocumented)
-export function later<T, M extends EmberMethod<T>>(
-...args: [
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>,
-wait: number,
-]
-): EmberRunTimer;
-
-// @public
-export function next<T, M extends EmberMethod<T>>(
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>
-): EmberRunTimer;
+export function join<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: Parameters<F>): ReturnType<F> | void;
 
 // @public (undocumented)
-export function next<M extends AnyFn>(
-method: M,
-...args: Parameters<M>
-): EmberRunTimer;
+export function join<T, U extends keyof T>(target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): T[U] extends (...args: any[]) => any ? ReturnType<T[U]> | void : void;
 
 // @public
-export function once<T, M extends EmberMethod<T>>(
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>
-): EmberRunTimer;
-
-// @public
-export function run<M extends AnyFn>(method: M): ReturnType<M>;
+export function later<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: [...args: Parameters<F>, wait: string | number]): Timer;
 
 // @public (undocumented)
-export function run<T, M extends EmberMethod<T>>(target: T, method: M, ...args: EmberMethodParams<T, M>): EmberMethodReturn<T, M>;
-
-// @public
-export function schedule<T, M extends EmberMethod<T>>(
-queue: EmberRunQueues,
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>
-): EmberRunTimer;
+export function later<F extends (...args: any[]) => any>(method: F, ...args: [...args: Parameters<F>, wait: string | number]): Timer;
 
 // @public (undocumented)
-export function schedule<M extends AnyFn>(
-queue: EmberRunQueues,
-method: M,
-...args: Parameters<M>
-): EmberRunTimer;
+export function later<T, U extends keyof T>(target: T, method: U, ...args: [
+...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : [],
+wait: string | number
+]): Timer;
 
 // @public
-export function scheduleOnce<T, M extends EmberMethod<T>>(
-queue: EmberRunQueues,
-target: T,
-method: M,
-...args: EmberMethodParams<T, M>
-): EmberRunTimer;
+export function next<F extends (...args: any[]) => any>(method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function next<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function next<T, U extends keyof T>(target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): Timer;
 
 // @public
-export function throttle(
-method: AnyFn,
-spacing: number,
+export function once<F extends (...args: any[]) => any>(method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function once<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function once<T, U extends keyof T>(target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): Timer;
+
+// @public
+export const _queues: string[];
+
+// @public (undocumented)
+export const _rsvpErrorQueue: string;
+
+// @public
+export function run<F extends () => any>(method: F): ReturnType<F>;
+
+// @public (undocumented)
+export function run<F extends (...args: any[]) => any>(method: F, ...args: Parameters<F>): ReturnType<F>;
+
+// @public (undocumented)
+export function run<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: Parameters<F>): ReturnType<F>;
+
+// @public (undocumented)
+export function run<T, U extends keyof T>(target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): T[U] extends (...args: any[]) => any ? ReturnType<T[U]> : unknown;
+
+// @public
+export function schedule<F extends (...args: any[]) => any>(queueName: string, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function schedule<T, F extends (this: T, ...args: any[]) => any>(queueName: string, target: T, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function schedule<T, U extends keyof T>(queueName: string, target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): Timer;
+
+// @public
+export function scheduleOnce<F extends (...args: any[]) => any>(queueName: string, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function scheduleOnce<T, F extends (this: T, ...args: any[]) => any>(queueName: string, target: T, method: F, ...args: Parameters<F>): Timer;
+
+// @public (undocumented)
+export function scheduleOnce<T, U extends keyof T>(queueName: string, target: T, method: U, ...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : []): Timer;
+
+// @public
+export function throttle<F extends (...args: any[]) => any>(method: F, ...args: [...args: Parameters<F>, wait?: string | number, immediate?: boolean]): Timer;
+
+// @public (undocumented)
+export function throttle<T, F extends (this: T, ...args: any[]) => any>(target: T, method: F, ...args: [...args: Parameters<F>, wait?: string | number, immediate?: boolean]): Timer;
+
+// @public (undocumented)
+export function throttle<T, U extends keyof T>(target: T, method: U, ...args: [
+...args: T[U] extends (...args: any[]) => any ? Parameters<T[U]> : [],
+wait?: string | number,
 immediate?: boolean
-): EmberRunTimer;
+]): Timer;
 
-// @public (undocumented)
-export function throttle<T, M extends EmberMethod<T>>(
-...args: [
-target: T,
-method: M,
-...methodArgs: EmberMethodParams<T, M>,
-spacing: number,
-immediate?: boolean
-]
-): EmberRunTimer;
+export { Timer }
 
 // (No @packageDocumentation comment for this package)
 

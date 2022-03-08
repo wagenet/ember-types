@@ -6,9 +6,28 @@
 
 import EngineInstance from '@ember/engine/instance';
 
-// @public
-class ApplicationInstance extends EngineInstance {}
+// @public (undocumented)
+class ApplicationInstance extends EngineInstance {
+    // (undocumented)
+    visit(url: string): Promise<this>;
+}
 export default ApplicationInstance;
+
+// @public (undocumented)
+export interface BootOptions {
+    // (undocumented)
+    document?: Document | null;
+    // (undocumented)
+    isBrowser?: boolean;
+    // (undocumented)
+    isInteractive?: boolean;
+    // (undocumented)
+    location?: string | null;
+    // (undocumented)
+    rootElement?: string | Element | null;
+    // (undocumented)
+    shouldRender?: boolean;
+}
 
 // (No @packageDocumentation comment for this package)
 

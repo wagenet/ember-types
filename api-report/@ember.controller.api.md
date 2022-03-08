@@ -4,63 +4,76 @@
 
 ```ts
 
-import ActionHandler from '@ember/object/-private/action-handler';
-import ComputedProperty from '@ember/object/computed';
-import EmberObject from '@ember/object';
-import Mixin from '@ember/object/mixin';
-
-// @public (undocumented)
-class Controller extends EmberObject.extend(ControllerMixin) {}
-export default Controller;
+import Controller$1 from '@ember/controller';
+import EngineInstance from '@ember/engine/instance';
+import { InternalRouteInfo } from 'router_js';
+import { MatchCallback } from 'route-recognizer';
+import Mixin$1 from '@ember/object/mixin';
+import { ModelFor } from 'router_js';
+import { Reference } from '@glimmer/reference';
+import Route$2 from '@ember/routing/route';
+import { Route as Route_2 } from 'router_js';
+import { RouteInfo } from 'router_js';
+import { RouteInfoWithAttributes } from 'router_js';
+import Router from 'router_js';
+import Service from '@ember/service';
+import { SimpleElement } from '@simple-dom/interface';
+import { Template } from '@glimmer/interfaces';
+import { TemplateFactory } from '@glimmer/interfaces';
+import { Timer } from 'backburner';
+import { Transition } from 'router_js';
+import { TransitionState } from 'router_js';
 
 // @public
-export interface ControllerMixin extends ActionHandler {
-    // (undocumented)
-    model: unknown;
-    // (undocumented)
-    queryParams: Array<string | Record<string, QueryParamConfig | string | undefined>>;
-    // @deprecated (undocumented)
-    replaceRoute(name: string, ...args: any[]): void;
-    // (undocumented)
-    target: object;
-    // @deprecated (undocumented)
-    transitionToRoute(name: string, ...args: any[]): void;
-    // @deprecated (undocumented)
-    transitionToRoute(...args: any[]): void;
+interface Controller<T = unknown> extends FrameworkObject, ControllerMixin<T> {
 }
 
 // @public (undocumented)
-export const ControllerMixin: Mixin<ControllerMixin>;
+class Controller<T = unknown> extends Controller_base {
+}
+export default Controller;
 
-// @public (undocumented)
-export function inject(): ComputedProperty<Controller>;
-
-// @public (undocumented)
-export function inject<K extends keyof Registry>(
-name: K
-): ComputedProperty<Registry[K]>;
-
-// @public (undocumented)
-export function inject(target: object, propertyKey: string | symbol): void;
-
-// @public (undocumented)
-export interface QueryParamConfig {
+// @internal (undocumented)
+export interface ControllerMixin<T> {
     // (undocumented)
-    as?: string | undefined;
+    concatenatedProperties: string[];
+
     // (undocumented)
-    scope?: QueryParamScopeTypes | undefined;
+    isController: true;
+
     // (undocumented)
-    type?: QueryParamTypes | undefined;
+    model: T;
+
+    // (undocumented)
+    _qpDelegate: unknown | null;
+
+    // (undocumented)
+    queryParams: Array<string | Record<string, { type: 'boolean' | 'number' | 'array' | 'string' }>>;
+
+    // (undocumented)
+    replaceRoute(...args: RouteArgs<Route$2>): Transition;
+
+    // (undocumented)
+    target: unknown | null;
+
+    // (undocumented)
+    transitionToRoute(...args: RouteArgs<Route$2>): Transition;
 }
 
-// @public (undocumented)
-export type QueryParamScopeTypes = 'controller' | 'model';
+// @internal (undocumented)
+export const ControllerMixin: Mixin$1;
+
+// @public
+export function inject(name: string): PropertyDecorator;
 
 // @public (undocumented)
-export type QueryParamTypes = 'boolean' | 'number' | 'array' | 'string';
+export function inject(...args: [ElementDescriptor[0], ElementDescriptor[1]]): void;
 
 // @public (undocumented)
-export interface Registry {}
+export function inject(...args: ElementDescriptor): DecoratorPropertyDescriptor;
+
+// @public (undocumented)
+export function inject(): PropertyDecorator;
 
 // (No @packageDocumentation comment for this package)
 

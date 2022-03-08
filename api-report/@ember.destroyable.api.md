@@ -4,35 +4,30 @@
 
 ```ts
 
-// @public (undocumented)
-export function assertDestroyablesDestroyed(): void;
+import { assertDestroyablesDestroyed } from '@glimmer/destroyable';
+import { associateDestroyableChild } from '@glimmer/destroyable';
+import { destroy } from '@glimmer/destroyable';
+import { enableDestroyableTracking } from '@glimmer/destroyable';
+import { isDestroyed } from '@glimmer/destroyable';
+import { isDestroying } from '@glimmer/destroyable';
 
-// @public (undocumented)
-export function associateDestroyableChild<T extends object>(parent: object, child: T): T;
+export { assertDestroyablesDestroyed }
 
-// @public (undocumented)
-export function destroy(destroyable: object): void;
+export { associateDestroyableChild }
 
-// @public (undocumented)
-export function enableDestroyableTracking(): void;
+export { destroy }
 
-// @public (undocumented)
-export function isDestroyed(destroyable: object): boolean;
+export { enableDestroyableTracking }
 
-// @public (undocumented)
-export function isDestroying(destroyable: object): boolean;
+export { isDestroyed }
 
-// @public (undocumented)
-export function registerDestructor<T extends object>(
-destroyable: T,
-destructor: (destroyable: T) => void
-): (destroyable: T) => void;
+export { isDestroying }
 
-// @public (undocumented)
-export function unregisterDestructor<T extends object>(
-destroyable: T,
-destructor: (destroyable: T) => void
-): void;
+// @public
+export function registerDestructor<T extends object>(destroyable: T, destructor: (destroyable: T) => void): (destroyable: T) => void;
+
+// @public
+export function unregisterDestructor<T extends object>(destroyable: T, destructor: (destroyable: T) => void): void;
 
 // (No @packageDocumentation comment for this package)
 
